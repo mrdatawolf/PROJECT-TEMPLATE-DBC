@@ -9,6 +9,15 @@ Start with `CLAUDE.md`, then read `AGENTS.md` and
 Active work is tracked through plan files in `tasks/`. The directory containing a
 task is its authoritative workflow state.
 
+## Presentation
+
+A slide deck introducing this system — [`presentation/index.html`](presentation/index.html) —
+is available live at
+[mrdatawolf.github.io/PROJECT-TEMPLATE-DBC/presentation/](https://mrdatawolf.github.io/PROJECT-TEMPLATE-DBC/presentation/)
+once GitHub Pages is enabled for this repo (Settings → Pages → deploy from the
+`main` branch). It also runs standalone by opening the file directly in any
+browser, no server required.
+
 ## Origin of Design by Contract
 
 The "DbC" in this template's name refers to Design by Contract, a methodology

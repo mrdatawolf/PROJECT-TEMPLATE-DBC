@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design by Contract for Human/AI Development</title>
+<style>
+  :root{
+    --bg: #0b0f14;
+    --bg-raised: #10161d;
+    --bg-panel: #0d1117;
+    --border: #21262d;
+    --text: #c9d1d9;
+    --text-dim: #8b949e;
+    --text-bright: #f0f3f6;
+    --green: #7ee787;
+    --amber: #ffa657;
+    --blue: #79c0ff;
+    --red: #ff7b72;
+    --purple: #d2a8ff;
+    --mono: "JetBrains Mono", "Cascadia Code", "Fira Code", ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --sans: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0; padding:0; height:100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+
+  body{
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(126,231,135,0.05), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(121,192,255,0.05), transparent 40%);
+  }
+
+  #deck{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .slide{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6vh 9vw 9vh 9vw;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+  }
+  .slide.active{
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  .slide.exit-left{
+    transform: translateX(-40px);
+  }
+
+  .kicker{
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.6rem;
+  }
+  .kicker.amber{ color: var(--amber); }
+  .kicker.blue{ color: var(--blue); }
+
+  h1{
+    font-size: 3rem;
+    line-height: 1.15;
+    margin: 0 0 0.4rem 0;
+    color: var(--text-bright);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  h2{
+    font-size: 2.1rem;
+    line-height: 1.2;
+    margin: 0 0 1.1rem 0;
+    color: var(--text-bright);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .subtitle{
+    font-size: 1.3rem;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    max-width: 46ch;
+  }
+  p.lede{
+    font-size: 1.25rem;
+    color: var(--text-dim);
+    max-width: 62ch;
+    line-height: 1.6;
+  }
+
+  .cols{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .cols.narrow-right{ grid-template-columns: 1.2fr 1fr; }
+
+  ul.pt, ol.pt{
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: var(--text);
+    padding-left: 1.3rem;
+    margin: 0;
+  }
+  ul.pt li, ol.pt li{ margin-bottom: 0.75rem; }
+  ul.pt li::marker{ color: var(--green); }
+  ul.pt.tight li, ol.pt.tight li{ margin-bottom: 0.4rem; }
+
+  .tag{
+    display:inline-block;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    margin-right: 0.4rem;
+  }
+
+  /* terminal / code window */
+  .term{
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  }
+  .term-bar{
+    display:flex;
+    align-items:center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.8rem;
+    background: var(--bg-raised);
+    border-bottom: 1px solid var(--border);
+  }
+  .term-dot{ width:10px; height:10px; border-radius:50%; }
+  .term-dot.r{ background:#ff5f56; }
+  .term-dot.y{ background:#ffbd2e; }
+  .term-dot.g{ background:#27c93f; }
+  .term-path{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-left: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .term-body{
+    padding: 1rem 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.92rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    color: var(--text);
+    max-height: 52vh;
+    overflow: auto;
+  }
+  .term-body .c{ color: var(--text-dim); font-style: italic; }
+  .term-body .k{ color: var(--purple); }
+  .term-body .s{ color: var(--green); }
+  .term-body .n{ color: var(--amber); }
+  .term-body .h{ color: var(--blue); }
+  .term-body .bad{ color: var(--red); }
+  .term-body .good{ color: var(--green); }
+
+  table.map{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.05rem;
+  }
+  table.map th, table.map td{
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  table.map th{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+  }
+  table.map td.dbc{ font-family: var(--mono); color: var(--blue); white-space: nowrap; }
+  table.map td.proc{ color: var(--text); }
+
+  .flow{
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    color: var(--text);
+    display:flex;
+    flex-wrap: wrap;
+    align-items:center;
+    gap: 0.5rem 0.3rem;
+  }
+  .flow .state{
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+  }
+  .flow .state.human{ border-color: var(--green); color: var(--green); }
+  .flow .state.agent{ border-color: var(--blue); color: var(--blue); }
+  .flow .arrow{ color: var(--text-dim); }
+  .flow .label{ font-size: 0.72rem; color: var(--text-dim); display:block; text-align:center; }
+
+  .statgrid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .stat{
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    border-radius: 8px;
+    padding: 1.1rem 1rem;
+    text-align:center;
+  }
+  .stat .num{
+    font-family: var(--mono);
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--green);
+    display:block;
+  }
+  .stat .lbl{
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+  }
+
+  .footer-note{
+    position:absolute;
+    bottom: 3vh;
+    left: 9vw;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+
+  .badge-row{ display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap: wrap; }
+  .badge{
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .badge.ok{ border-color: var(--green); color: var(--green); }
+  .badge.warn{ border-color: var(--amber); color: var(--amber); }
+
+  blockquote.q{
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    color: var(--text-bright);
+    border-left: 3px solid var(--green);
+    margin: 0;
+    padding: 0.2rem 0 0.2rem 1.2rem;
+    line-height: 1.6;
+  }
+
+  .center-slide{
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+  }
+  .center-slide .subtitle{ max-width: 60ch; margin-left:auto; margin-right:auto; }
+
+  .steps{
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    line-height: 2;
+    color: var(--text);
+  }
+  .steps .n{
+    display:inline-block;
+    width: 1.6em;
+    color: var(--bg);
+    background: var(--green);
+    border-radius: 4px;
+    text-align:center;
+    margin-right: 0.6em;
+    font-weight: 700;
+  }
+
+  /* UI chrome */
+  #progress{
+    position: fixed;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    transition: width 0.3s ease;
+    z-index: 20;
+  }
+  #counter{
+    position: fixed;
+    bottom: 1.4vh; right: 2vw;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    z-index: 20;
+  }
+  #hint{
+    position: fixed;
+    top: 1.6vh; right: 2vw;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    opacity: 0.7;
+    z-index: 20;
+  }
+  .nav-zone{
+    position: fixed; top:0; bottom:0; width: 12%;
+    z-index: 10; cursor: pointer;
+  }
+  .nav-zone.left{ left:0; }
+  .nav-zone.right{ right:0; }
+
+  #help-overlay{
+    position: fixed; inset:0;
+    background: rgba(2,4,7,0.92);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index: 100;
+    font-family: var(--mono);
+  }
+  #help-overlay.show{ display:flex; }
+  #help-overlay .box{
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    border-radius: 10px;
+    padding: 2rem 2.5rem;
+    color: var(--text);
+  }
+  #help-overlay h3{ color: var(--text-bright); margin-top:0; }
+  #help-overlay .row{ display:flex; justify-content:space-between; gap:2rem; padding: 0.3rem 0; color: var(--text-dim); }
+  #help-overlay .row kbd{
+    background: var(--bg-raised); border:1px solid var(--border);
+    border-radius: 4px; padding: 0.1rem 0.45rem; color: var(--text-bright);
+  }
+
+  @media (max-width: 900px){
+    .cols, .cols.narrow-right{ grid-template-columns: 1fr; }
+    h1{ font-size: 2.2rem; }
+    h2{ font-size: 1.6rem; }
+    .statgrid{ grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div id="deck"></div>
+<div id="progress" style="width:0%"></div>
+<div id="counter">1 / 1</div>
+<div id="hint">press ? for keys</div>
+<div class="nav-zone left" onclick="prevSlide()"></div>
+<div class="nav-zone right" onclick="nextSlide()"></div>
+
+<div id="help-overlay">
+  <div class="box">
+    <h3>Keyboard shortcuts</h3>
+    <div class="row"><span>Next slide</span><span><kbd>&rarr;</kbd> <kbd>Space</kbd> <kbd>PgDn</kbd></span></div>
+    <div class="row"><span>Previous slide</span><span><kbd>&larr;</kbd> <kbd>PgUp</kbd></span></div>
+    <div class="row"><span>First / last slide</span><span><kbd>Home</kbd> <kbd>End</kbd></span></div>
+    <div class="row"><span>Jump to slide</span><span><kbd>1</kbd>&ndash;<kbd>9</kbd></span></div>
+    <div class="row"><span>Fullscreen</span><span><kbd>F</kbd></span></div>
+    <div class="row"><span>This help</span><span><kbd>?</kbd> / <kbd>Esc</kbd></span></div>
+  </div>
+</div>
+
+<script>
+/* ---------- slide content ---------- */
+/* Each entry is the innerHTML of one <section class="slide"> */
+const slides = [];
+
+// 1. Title
+slides.push(`
+<div class="center-slide" style="display:flex;flex-direction:column;height:100%;">
+  <div class="kicker">a talk for people who ship code, not just prompts</div>
+  <h1>Design by Contract<br>for Human/AI Development</h1>
+  <p class="subtitle">Bertrand Meyer formalized obligations between a component and its caller.
+  This applies that same discipline to the obligations between a human and the AI agents writing their code.</p>
+  <div class="badge-row" style="justify-content:center;">
+    <span class="badge ok">preconditions</span>
+    <span class="badge ok">postconditions</span>
+    <span class="badge ok">invariants</span>
+    <span class="badge warn">applied to a dev process, not a function signature</span>
+  </div>
+</div>
+`);
+
+// 2. The problem
+slides.push(`
+<div class="kicker amber">the problem</div>
+<h2>AI coding agents are fast. That's not the same as trustworthy.</h2>
+<div class="cols">
+  <ul class="pt">
+    <li><strong>Scope creep</strong> &mdash; asked to fix a bug, the agent "helpfully" refactors three unrelated files.</li>
+    <li><strong>Silent architecture decisions</strong> &mdash; a design choice gets buried inside a diff instead of surfaced for review.</li>
+    <li><strong>No memory across sessions</strong> &mdash; every new chat re-derives context from scratch, or worse, re-decides things that were already settled.</li>
+    <li><strong>Unreviewable output</strong> &mdash; "it works" isn't the same as "it satisfies the requirement," and there's no artifact to check it against.</li>
+  </ul>
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">chat_history.log</span></div>
+    <div class="term-body"><span class="c"># three weeks later, a teammate asks:</span>
+"why does <span class="h">auth.js</span> check <span class="n">isAdmin</span> three
+different ways?"
+
+<span class="c">$</span> git blame auth.js
+<span class="bad"># the answer is in a chat window that no longer exists</span></div>
+  </div>
+</div>
+`);
+
+// 3. Origin of DbC
+slides.push(`
+<div class="kicker">origin</div>
+<h2>Design by Contract (Meyer, Eiffel, 1980s)</h2>
+<div class="cols">
+  <div>
+    <p class="lede">A routine and its caller share a contract, exactly like a legal one:</p>
+    <ul class="pt">
+      <li><strong>Precondition</strong> &mdash; what the caller must guarantee before calling.</li>
+      <li><strong>Postcondition</strong> &mdash; what the routine guarantees in return, if the precondition held.</li>
+      <li><strong>Invariant</strong> &mdash; what must remain true throughout, for both sides.</li>
+    </ul>
+    <p class="lede" style="margin-top:1rem;">Break the contract, and it's clear <em>whose</em> bug it is.</p>
+  </div>
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">account.e &mdash; Eiffel</span></div>
+    <div class="term-body"><span class="k">withdraw</span> (sum: <span class="h">INTEGER</span>)
+  <span class="k">require</span>
+    <span class="s">sum_positive:</span> sum &gt; <span class="n">0</span>
+    <span class="s">sufficient_funds:</span> sum &lt;= balance
+  <span class="k">do</span>
+    balance := balance - sum
+  <span class="k">ensure</span>
+    <span class="s">balance_reduced:</span> balance = <span class="k">old</span> balance - sum
+  <span class="k">end</span></div>
+  </div>
+</div>
+<p class="footer-note">Meyer, <em>Object-Oriented Software Construction</em>, Prentice Hall, 1988 / 1997</p>
+`);
+
+// 4. The reframe
+slides.push(`
+<div class="kicker blue">the reframe</div>
+<h2>Same discipline, one level up</h2>
+<p class="lede">The routine/caller pair becomes the human/agent pair. The obligations don't change in
+spirit &mdash; explicit expectations, verifiable results, clear responsibility &mdash; only the
+thing being called.</p>
+<div class="term" style="max-width:70ch;">
+  <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+    <span class="term-path">CLAUDE.md &mdash; foundational rules</span></div>
+  <div class="term-body"><span class="n">1.</span> Understand and design meaningful changes before implementing them.
+<span class="n">2.</span> Do not begin implementation without an approved task.
+<span class="n">3.</span> Implement approved behavior without silently expanding scope.
+<span class="n">4.</span> Escalate material ambiguity to the human.
+<span class="n">5.</span> Keep lasting knowledge in the repository, not chat history.
+<span class="n">6.</span> Independent review is distinct from implementation.
+<span class="n">7.</span> Do not continue beyond the responsibility assigned to your role.</div>
+</div>
+`);
+
+// 5. Mapping table
+slides.push(`
+<div class="kicker">the mapping</div>
+<h2>Contract vocabulary, ported</h2>
+<table class="map">
+  <tr><th>DbC term</th><th>Process equivalent</th></tr>
+  <tr><td class="dbc">precondition</td><td class="proc">A task must be sitting in <code>tasks/approved/</code> before any implementation begins.</td></tr>
+  <tr><td class="dbc">postcondition</td><td class="proc">Acceptance criteria are met <em>and</em> an independent reviewer has verified it &mdash; not just "the agent thinks it's done."</td></tr>
+  <tr><td class="dbc">invariant</td><td class="proc">Unrelated behavior and user changes are preserved across the whole change, not just the touched lines.</td></tr>
+  <tr><td class="dbc">exception</td><td class="proc">Ambiguity is escalated to the human, not silently resolved by guessing the "sensible" answer.</td></tr>
+  <tr><td class="dbc">interface</td><td class="proc">A contract document describes required <em>behavior</em> &mdash; it does not prescribe implementation.</td></tr>
+</table>
+`);
+
+// 6. State machine
+slides.push(`
+<div class="kicker">the state machine</div>
+<h2>A task's directory <em>is</em> its state</h2>
+<p class="lede" style="margin-bottom:2rem;">No status field to drift out of sync with reality &mdash; the filesystem
+location is the single source of truth. If you've ever trusted <code>/proc</code> over a management API, you already believe in this.</p>
+<div class="flow">
+  <span class="state">proposed</span>
+  <span class="arrow">&mdash;<span class="label">human approval</span>&rarr;</span>
+  <span class="state human">approved</span>
+  <span class="arrow">&mdash;<span class="label">agent assigned</span>&rarr;</span>
+  <span class="state agent">in-progress</span>
+  <span class="arrow">&mdash;<span class="label">handoff</span>&rarr;</span>
+  <span class="state">review</span>
+  <span class="arrow">&mdash;<span class="label">acceptance</span>&rarr;</span>
+  <span class="state human">completed</span>
+</div>
+<div class="flow" style="margin-top:0.8rem;">
+  <span class="state">review</span>
+  <span class="arrow">&mdash;<span class="label">changes requested</span>&rarr;</span>
+  <span class="state agent">in-progress</span>
+</div>
+`);
+
+// 7. Authority rules
+slides.push(`
+<div class="kicker">who may move what</div>
+<h2>Every transition has an owner</h2>
+<div class="cols">
+  <ul class="pt">
+    <li>Only the <strong>human</strong> moves <code>proposed &rarr; approved</code>.</li>
+    <li>An assigned <strong>implementer</strong> moves <code>approved &rarr; in-progress</code>.</li>
+    <li>The <strong>implementer</strong> moves work to <code>review</code> after recording a handoff.</li>
+    <li>The <strong>reviewer</strong> records findings &mdash; it does not implement fixes or accept the task.</li>
+    <li>Only the <strong>human</strong> moves work to <code>completed</code>.</li>
+  </ul>
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">AGENTS.md &mdash; instruction precedence</span></div>
+    <div class="term-body"><span class="n">1.</span> Direct human instructions, current task
+<span class="n">2.</span> CLAUDE.md foundational rules
+<span class="n">3.</span> AGENTS.md (nearest scope wins)
+<span class="n">4.</span> Approved contracts in scope
+<span class="n">5.</span> Project docs and accepted ADRs
+<span class="n">6.</span> The approved task plan itself
+
+<span class="c">// same idea as /etc defaults vs. user config &mdash;
+// more specific clarifies, never silently overrides</span></div>
+  </div>
+</div>
+`);
+
+// 8. Roles as specialists
+slides.push(`
+<div class="kicker">roles</div>
+<h2>Specialists, not one generalist agent</h2>
+<p class="lede" style="margin-bottom:1.5rem;">Do one thing well &mdash; the same argument for small composable
+Unix tools applies to agent roles.</p>
+<div class="cols">
+  <ul class="pt tight">
+    <li><span class="tag">human</span> owns goals, priorities, architecture, acceptance</li>
+    <li><span class="tag">architect</span> clarifies requirements, proposes architecture, decomposes work</li>
+    <li><span class="tag">contract designer</span> turns approved designs into precise behavioral contracts</li>
+  </ul>
+  <ul class="pt tight">
+    <li><span class="tag">implementer</span> satisfies the contract &mdash; does not invent it</li>
+    <li><span class="tag">ux specialist</span> interaction design, accessibility, frontend behavior</li>
+    <li><span class="tag">reviewer</span> verifies compliance, regressions, security &mdash; independent of implementation</li>
+  </ul>
+</div>
+`);
+
+// 9. Contract structure
+slides.push(`
+<div class="kicker">the artifact</div>
+<h2>What a contract document actually contains</h2>
+<div class="term" style="max-width:78ch;">
+  <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+    <span class="term-path">docs/contracts/TEMPLATE.md</span></div>
+  <div class="term-body"><span class="h">#</span> CONTRACT-NNN: Title
+
+Status: <span class="n">Proposed</span> | Accepted
+Approved by: &middot; Approved date: &middot; Related tasks:
+
+<span class="h">##</span> Purpose        <span class="c">&mdash; why this exists</span>
+<span class="h">##</span> Scope          <span class="c">&mdash; included / excluded, explicitly</span>
+<span class="h">##</span> Actors
+<span class="h">##</span> Inputs and outputs
+<span class="h">##</span> Preconditions
+<span class="h">##</span> Required behavior
+<span class="h">##</span> Postconditions and invariants
+<span class="h">##</span> Failure behavior
+<span class="h">##</span> Interfaces
+<span class="h">##</span> Validation requirements
+<span class="h">##</span> Open questions <span class="c">&mdash; the part everyone skips. don't.</span></div>
+  </div>
+</div>
+`);
+
+// 10. Real example CONTRACT-007
+slides.push(`
+<div class="kicker blue">real example &mdash; from a production repo</div>
+<h2>CONTRACT-007: REST validation, MeshtasticForeman</h2>
+<p class="lede" style="margin-bottom:1rem;">A task to add Zod validation across REST routes flagged its own biggest risk:
+tightening validation could reject input that silently "succeeds" today. The contract didn't guess &mdash; it enumerated.</p>
+<div class="term">
+  <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+    <span class="term-path">docs/contracts/CONTRACT-007 &mdash; Open questions #1</span></div>
+  <div class="term-body"><span class="bad">since=banana</span> today &rarr; silently means <span class="c">"no time filter"</span>
+                 (query just gets wider than intended)
+
+/api/traceroutes already <span class="good">rejects</span> the same input with <span class="n">400</span>
+
+<span class="c">// one shared `since` schema must pick ONE behavior.</span>
+<span class="c">// recommendation given &mdash; but the human decides,</span>
+<span class="c">// because this silently changes 11 endpoints' behavior.</span></div>
+  </div>
+</div>
+`);
+
+// 11. ADR example
+slides.push(`
+<div class="kicker blue">real example &mdash; architecture decisions</div>
+<h2>ADR-002: PGlite worker-thread pattern</h2>
+<p class="lede">A decision made once, recorded once, with its actual trade-offs &mdash; instead of
+getting silently re-litigated (or silently reversed) by whichever agent touches the file next.</p>
+<blockquote class="q">"PGlite's WASM initdb aborts when called directly on Windows,<br>
+so we always spin it up inside a worker thread."</blockquote>
+<div class="cols" style="margin-top:1.5rem;">
+  <ul class="pt tight">
+    <li><strong>Benefit:</strong> works around a hard platform blocker</li>
+    <li><strong>Cost:</strong> every query now crosses a thread boundary</li>
+  </ul>
+  <ul class="pt tight">
+    <li><strong>Open question, recorded, not hidden:</strong> is this still needed on non-Windows platforms?</li>
+  </ul>
+</div>
+`);
+
+// 12. Living memory
+slides.push(`
+<div class="kicker">durable knowledge</div>
+<h2>The repository is the memory. The chat is not.</h2>
+<p class="lede" style="margin-bottom:1.5rem;">Every contract, ADR, and task file outlives the conversation that produced it.
+The next agent &mdash; or the next human &mdash; reads the repo, not a transcript.</p>
+<div class="cols">
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">docs/</span></div>
+    <div class="term-body">contracts/    <span class="c"># approved behavior</span>
+decisions/    <span class="c"># ADRs &mdash; why, not just what</span>
+roles/        <span class="c"># what each specialist owns</span>
+workflow/     <span class="c"># lifecycle, gates, definition of done</span></div>
+  </div>
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">API_PROMISES.md</span></div>
+    <div class="term-body"><span class="c">// a living contract with external consumers</span>
+"An API promise is a contract: given valid
+input, the server commits to a specific
+output." &mdash; and yes, it's versioned in git,
+not in someone's memory of a stand-up.</div>
+  </div>
+</div>
+`);
+
+// 13. Proof at scale
+slides.push(`
+<div class="kicker amber">does this actually work?</div>
+<h2>MeshtasticForeman: this system, mid-flight</h2>
+<p class="lede">An Electron desktop app + daemon + web UI, actively being rebuilt under this exact process.
+Not a toy example &mdash; the numbers as of this talk:</p>
+<div class="statgrid">
+  <div class="stat"><span class="num">11</span><span class="lbl">accepted contracts</span></div>
+  <div class="stat"><span class="num">4</span><span class="lbl">recorded ADRs</span></div>
+  <div class="stat"><span class="num">38</span><span class="lbl">completed tasks</span></div>
+  <div class="stat"><span class="num">6</span><span class="lbl">in flight (approved + review)</span></div>
+</div>
+<p class="lede" style="margin-top:1.5rem; font-size:1.05rem;">Every one of those 38 completions has a recorded handoff and an independent review &mdash; not just a merged PR.</p>
+`);
+
+// 14. Scales down too
+slides.push(`
+<div class="kicker amber">it also scales down</div>
+<h2>DM_Helper: day one of adoption</h2>
+<p class="lede" style="margin-bottom:1rem;">A hobbyist app, just starting to scaffold tasks. Same discipline, much smaller stakes &mdash;
+and it already caught something worth catching.</p>
+<div class="term" style="max-width:78ch;">
+  <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+    <span class="term-path">tasks/proposed/TASK-004-consolidate-permission-checks.md</span></div>
+  <div class="term-body">"The DM/admin-equivalence question is a genuine <span class="n">product
+decision</span> hiding inside what looks like a refactor &mdash;
+do not resolve it by guessing which behavior <span class="c">'seems
+right.'</span> Escalate ... if it isn't already unambiguous."</div>
+</div>
+<p class="lede" style="margin-top:1rem; font-size:1.05rem;">A plain "consolidate the auth checks" refactor request &mdash; caught before
+it silently became a permissions redesign.</p>
+`);
+
+// 15. What you get
+slides.push(`
+<div class="kicker">the payoff</div>
+<h2>What this actually buys you</h2>
+<div class="cols">
+  <ul class="pt">
+    <li><strong>Bounded scope</strong> &mdash; approval authorizes exactly what's in the task, nothing adjacent.</li>
+    <li><strong>Reviewable diffs</strong> &mdash; there's a contract to check the diff against, not just vibes.</li>
+    <li><strong>Ambiguity surfaces early</strong> &mdash; as an open question, not as a surprise in production.</li>
+  </ul>
+  <ul class="pt">
+    <li><strong>Durable knowledge</strong> &mdash; decisions survive the chat window that made them.</li>
+    <li><strong>Accountable roles</strong> &mdash; when something breaks, the responsible boundary is clear.</li>
+    <li><strong>It's just files</strong> &mdash; markdown and directories. Grep it, diff it, review it in a PR.</li>
+  </ul>
+</div>
+`);
+
+// 16. Try it / closing
+slides.push(`
+<div class="kicker">try it</div>
+<h2>Start here</h2>
+<div class="steps">
+  <div><span class="n">1</span> Read <code>CLAUDE.md</code> &mdash; the foundational rules</div>
+  <div><span class="n">2</span> Read <code>AGENTS.md</code> &mdash; operating instructions for agents</div>
+  <div><span class="n">3</span> Read <code>docs/AI_DEVELOPMENT_SYSTEM.md</code> &mdash; the philosophy in full</div>
+  <div><span class="n">4</span> Drop a task into <code>tasks/proposed/</code> and see what comes back</div>
+</div>
+<p class="lede" style="margin-top:2rem;">It's a template repository &mdash; clone it, gut the parts that don't fit your team, keep the gates.</p>
+<div class="footer-note" style="position:static; margin-top:2.5rem;">Design by Contract &middot; Bertrand Meyer, 1980s &nbsp;&mdash;&nbsp; applied to human/AI workflow, 2026</div>
+`);
+
+/* ---------- engine ---------- */
+const deck = document.getElementById("deck");
+const progress = document.getElementById("progress");
+const counter = document.getElementById("counter");
+const helpOverlay = document.getElementById("help-overlay");
+
+slides.forEach((html, i) => {
+  const sec = document.createElement("section");
+  sec.className = "slide";
+  sec.dataset.index = i;
+  sec.innerHTML = html;
+  deck.appendChild(sec);
+});
+
+const sections = Array.from(document.querySelectorAll(".slide"));
+let current = 0;
+
+function render(){
+  sections.forEach((s, i) => {
+    s.classList.remove("active", "exit-left");
+    if(i === current) s.classList.add("active");
+    else if(i < current) s.classList.add("exit-left");
+  });
+  progress.style.width = ((current + 1) / sections.length * 100) + "%";
+  counter.textContent = (current + 1) + " / " + sections.length;
+  history.replaceState(null, "", "#" + (current + 1));
+}
+
+function goTo(i){
+  if(i < 0 || i >= sections.length) return;
+  current = i;
+  render();
+}
+function nextSlide(){ goTo(current + 1); }
+function prevSlide(){ goTo(current - 1); }
+
+function toggleHelp(force){
+  const show = force !== undefined ? force : !helpOverlay.classList.contains("show");
+  helpOverlay.classList.toggle("show", show);
+}
+
+document.addEventListener("keydown", (e) => {
+  if(helpOverlay.classList.contains("show") && e.key !== "?" && e.key !== "Escape"){
+    return;
+  }
+  switch(e.key){
+    case "ArrowRight": case " ": case "PageDown":
+      e.preventDefault(); nextSlide(); break;
+    case "ArrowLeft": case "PageUp":
+      e.preventDefault(); prevSlide(); break;
+    case "Home":
+      e.preventDefault(); goTo(0); break;
+    case "End":
+      e.preventDefault(); goTo(sections.length - 1); break;
+    case "f": case "F":
+      if(document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen().catch(()=>{});
+      break;
+    case "?":
+      toggleHelp(); break;
+    case "Escape":
+      toggleHelp(false); break;
+    default:
+      if(e.key >= "1" && e.key <= "9"){
+        const n = parseInt(e.key, 10) - 1;
+        if(n < sections.length) goTo(n);
+      }
+  }
+});
+
+// deep-link support: open with #4 to start on slide 4
+const hashN = parseInt(location.hash.replace("#",""), 10);
+if(!isNaN(hashN) && hashN >= 1 && hashN <= sections.length){
+  current = hashN - 1;
+}
+render();
+</script>
+</body>
+</html>
