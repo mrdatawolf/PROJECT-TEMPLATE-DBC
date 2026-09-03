@@ -408,6 +408,8 @@
     <div class="row"><span>Jump to slide</span><span><kbd>1</kbd>&ndash;<kbd>9</kbd></span></div>
     <div class="row"><span>Fullscreen</span><span><kbd>F</kbd></span></div>
     <div class="row"><span>This help</span><span><kbd>?</kbd> / <kbd>Esc</kbd></span></div>
+    <div class="row"><span>Previous slide</span><span> left mouse</kbd> on the left side </span></div>
+    <div class="row"><span>Next slide</span><span> left mouse</kbd> on the right side </span></div>
   </div>
 </div>
 
@@ -466,7 +468,24 @@ slides.push(`
 </div>
 `);
 
-// 4. Intro panel 3 - AI-assisted factory
+// 4. Intro panel 2b - Human + AI paired
+slides.push(`
+<div class="kicker blue">pairing up</div>
+<h2>Same steps, now with an AI at every station too</h2>
+<div class="cols">
+  <ul class="pt">
+    <li>Nothing about the pipeline shape changes yet &mdash; same seven stations, same order.</li>
+    <li>Every station now has two workers: the human's judgment, the AI's throughput.</li>
+    <li>Specialization comes next &mdash; first, just add the second worker.</li>
+  </ul>
+  <figure class="shot">
+    <img src="images/panel-2b-human-ai-together.png" alt="The same seven development stations as the solo developer, but now each station has both a human and an AI working it together.">
+    <figcaption>2B. Human + AI, Paired at Every Step</figcaption>
+  </figure>
+</div>
+`);
+
+// 5. Intro panel 3 - AI-assisted factory
 slides.push(`
 <div class="kicker blue">the shift</div>
 <h2>Specialize the steps, not just the person</h2>
@@ -483,7 +502,7 @@ slides.push(`
 </div>
 `);
 
-// 5. Intro panel 4 - Parallel pipelines
+// 6. Intro panel 4 - Parallel pipelines
 slides.push(`
 <div class="kicker blue">scale out</div>
 <h2>Many work items, moving in parallel</h2>
@@ -500,7 +519,7 @@ slides.push(`
 </div>
 `);
 
-// 6. Intro panel 5 - Integration
+// 7. Intro panel 5 - Integration
 slides.push(`
 <div class="kicker">closing the loop</div>
 <h2>Completed work integrates back into the project</h2>
@@ -517,7 +536,7 @@ slides.push(`
 </div>
 `);
 
-// 7. Intro panel 6 - Governance & DbC
+// 8. Intro panel 6 - Governance & DbC
 slides.push(`
 <div class="kicker amber">who's steering</div>
 <h2>Governance still has to be human-led</h2>
@@ -534,7 +553,7 @@ slides.push(`
 </div>
 `);
 
-// 8. The problem
+// 9. The problem
 slides.push(`
 <div class="kicker amber">the problem</div>
 <h2>AI coding agents are fast. That's not the same as trustworthy.</h2>
@@ -558,7 +577,7 @@ different ways?"
 </div>
 `);
 
-// 9. Origin of DbC
+// 10. Origin of DbC
 slides.push(`
 <div class="kicker">origin</div>
 <h2>Design by Contract (Meyer, Eiffel, 1980s)</h2>
@@ -589,7 +608,7 @@ slides.push(`
 <p class="footer-note">Meyer, <em>Object-Oriented Software Construction</em>, Prentice Hall, 1988 / 1997</p>
 `);
 
-// 10. The reframe
+// 11. The reframe
 slides.push(`
 <div class="kicker blue">the reframe</div>
 <h2>Same discipline, one level up</h2>
@@ -609,7 +628,7 @@ thing being called.</p>
 </div>
 `);
 
-// 11. Mapping table
+// 12. Mapping table
 slides.push(`
 <div class="kicker">the mapping</div>
 <h2>Contract vocabulary, ported</h2>
@@ -623,7 +642,7 @@ slides.push(`
 </table>
 `);
 
-// 12. State machine
+// 13. State machine
 slides.push(`
 <div class="kicker">the state machine</div>
 <h2>A task's directory <em>is</em> its state</h2>
@@ -647,7 +666,7 @@ location is the single source of truth. If you've ever trusted <code>/proc</code
 </div>
 `);
 
-// 13. Authority rules
+// 14. Authority rules
 slides.push(`
 <div class="kicker">who may move what</div>
 <h2>Every transition has an owner</h2>
@@ -675,7 +694,7 @@ slides.push(`
 </div>
 `);
 
-// 14. Roles as specialists
+// 15. Roles as specialists
 slides.push(`
 <div class="kicker">roles</div>
 <h2>Specialists, not one generalist agent</h2>
@@ -695,7 +714,7 @@ Unix tools applies to agent roles.</p>
 </div>
 `);
 
-// 15. Contract structure
+// 16. Contract structure
 slides.push(`
 <div class="kicker">the artifact</div>
 <h2>What a contract document actually contains</h2>
@@ -722,7 +741,7 @@ Approved by: &middot; Approved date: &middot; Related tasks:
 </div>
 `);
 
-// 16. Real example CONTRACT-007
+// 17. Real example CONTRACT-007
 slides.push(`
 <div class="kicker blue">real example &mdash; from a production repo</div>
 <h2>CONTRACT-007: REST validation, MeshtasticForeman</h2>
@@ -743,7 +762,7 @@ tightening validation could reject input that silently "succeeds" today. The con
 </div>
 `);
 
-// 17. ADR example
+// 18. ADR example
 slides.push(`
 <div class="kicker blue">real example &mdash; architecture decisions</div>
 <h2>ADR-002: PGlite worker-thread pattern</h2>
@@ -762,7 +781,7 @@ so we always spin it up inside a worker thread."</blockquote>
 </div>
 `);
 
-// 18. Living memory
+// 19. Living memory
 slides.push(`
 <div class="kicker">durable knowledge</div>
 <h2>The repository is the memory. The chat is not.</h2>
@@ -789,7 +808,7 @@ not in someone's memory of a stand-up.</div>
 </div>
 `);
 
-// 19. Proof at scale
+// 20. Proof at scale
 slides.push(`
 <div class="kicker amber">does this actually work?</div>
 <h2>MeshtasticForeman: this system, mid-flight</h2>
@@ -804,7 +823,7 @@ Not a toy example &mdash; the numbers as of this talk:</p>
 <p class="lede" style="margin-top:1.5rem; font-size:1.05rem;">Every one of those 38 completions has a recorded handoff and an independent review &mdash; not just a merged PR.</p>
 `);
 
-// 20. Scales down too
+// 21. Scales down too
 slides.push(`
 <div class="kicker amber">it also scales down</div>
 <h2>DM_Helper: day one of adoption</h2>
@@ -822,7 +841,7 @@ right.'</span> Escalate ... if it isn't already unambiguous."</div>
 it silently became a permissions redesign.</p>
 `);
 
-// 21. What you get
+// 22. What you get
 slides.push(`
 <div class="kicker">the payoff</div>
 <h2>What this actually buys you</h2>
@@ -840,7 +859,7 @@ slides.push(`
 </div>
 `);
 
-// 22. Try it / closing
+// 23. Try it / closing
 slides.push(`
 <div class="kicker">try it</div>
 <h2>Start here</h2>
