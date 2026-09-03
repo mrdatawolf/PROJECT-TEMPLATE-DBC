@@ -279,6 +279,8 @@
     font-size: 0.78rem;
     color: var(--text-dim);
   }
+  .footer-note a{ color: var(--blue); text-decoration: none; }
+  .footer-note a:hover{ text-decoration: underline; }
 
   .badge-row{ display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap: wrap; }
   .badge{
@@ -431,6 +433,8 @@ slides.push(`
     <span class="badge ok">invariants</span>
     <span class="badge warn">applied to a dev process, not a function signature</span>
   </div>
+  <div class="footer-note" style="position:static; margin-top:2rem; text-align:center;">Design by Contract originates with
+<a href="https://bertrandmeyer.com/category/design-by-contract/" target="_blank" rel="noopener">Bertrand Meyer</a> &mdash; this talk applies it, doesn't claim it.</div>
 </div>
 `);
 
@@ -605,7 +609,8 @@ slides.push(`
   <span class="k">end</span></div>
   </div>
 </div>
-<p class="footer-note">Meyer, <em>Object-Oriented Software Construction</em>, Prentice Hall, 1988 / 1997</p>
+<p class="footer-note">Meyer, <em>Object-Oriented Software Construction</em>, Prentice Hall, 1988 / 1997 &nbsp;&mdash;&nbsp;
+<a href="https://bertrandmeyer.com/category/design-by-contract/" target="_blank" rel="noopener">bertrandmeyer.com/category/design-by-contract</a></p>
 `);
 
 // 11. The reframe
@@ -817,10 +822,57 @@ Not a toy example &mdash; the numbers as of this talk:</p>
 <div class="statgrid">
   <div class="stat"><span class="num">11</span><span class="lbl">accepted contracts</span></div>
   <div class="stat"><span class="num">4</span><span class="lbl">recorded ADRs</span></div>
-  <div class="stat"><span class="num">38</span><span class="lbl">completed tasks</span></div>
+  <div class="stat"><span class="num">48</span><span class="lbl">completed tasks</span></div>
   <div class="stat"><span class="num">6</span><span class="lbl">in flight (approved + review)</span></div>
 </div>
-<p class="lede" style="margin-top:1.5rem; font-size:1.05rem;">Every one of those 38 completions has a recorded handoff and an independent review &mdash; not just a merged PR.</p>
+<p class="lede" style="margin-top:1.5rem; font-size:1.05rem;">Every one of those 48 completions has a recorded handoff and an independent review &mdash; not just a merged PR.</p>
+`);
+
+// 20b. History, not a snapshot
+slides.push(`
+<div class="kicker amber">what's behind that number</div>
+<h2>A history, not a snapshot</h2>
+<p class="lede" style="margin-bottom:1.2rem;">"48 completed tasks" is a tally. Open the directory and it's a timeline &mdash;
+every entry the same shape, each one openable into why it happened.</p>
+<div class="cols">
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">tasks/completed/ &mdash; 48 files</span></div>
+    <div class="term-body">TASK-001  add-shared-eslint-prettier-config&hellip;
+TASK-005  add-tests-for-every-analytics-rest-e&hellip;
+TASK-012  consolidate-the-duplicate-pglite-wor&hellip;
+TASK-017  move-daemon-derived-state-out-of-app&hellip;
+TASK-023  narrow-the-meshtastic-any-boundary
+TASK-027  add-fastify-zod-schemas-for-rest-que&hellip;
+TASK-030  replace-broad-exception-suppression-&hellip;
+TASK-034  record-retrospective-adrs-for-major-&hellip;
+TASK-036  fix-exotic-subdependency-blocking-a-&hellip;
+TASK-039  clear-stale-pglite-lock-on-daemon-st&hellip;
+TASK-042  move-map-search-bar-off-top-center
+TASK-045  fix-nodes-tab-last-heard-sort-crossi&hellip;
+<span class="c">&hellip; 36 more, each the same shape</span></div>
+  </div>
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">tasks/completed/TASK-045-&hellip;.md &mdash; top of file</span></div>
+    <div class="term-body"><span class="h">#</span> TASK-045: Fix Nodes tab "Last Heard" sort
+so the displayed column matches the sort key
+
+Proposed by: Claude <span class="c">(investigation of a reported
+screenshot, not a guess)</span>
+Approved by: Patrick &middot; 2026-08-26
+
+<span class="h">##</span> Desired outcome
+Sorting by "Last Heard" produces a list where
+the visible values are actually in order &mdash;
+not the case today for any node with both
+mesh and MQTT data&hellip;
+
+<span class="c">&hellip; Context, Scope, Plan, Acceptance criteria,
+    Validation, Implementation handoff, Review,
+    Human acceptance follow below</span></div>
+  </div>
+</div>
 `);
 
 // 21. Scales down too
@@ -867,10 +919,10 @@ slides.push(`
   <div><span class="n">1</span> Read <code>CLAUDE.md</code> &mdash; the foundational rules</div>
   <div><span class="n">2</span> Read <code>AGENTS.md</code> &mdash; operating instructions for agents</div>
   <div><span class="n">3</span> Read <code>docs/AI_DEVELOPMENT_SYSTEM.md</code> &mdash; the philosophy in full</div>
-  <div><span class="n">4</span> Drop a task into <code>tasks/proposed/</code> and see what comes back</div>
+  <div><span class="n">4</span> Ask your AI to draft a task for something you want to build &mdash; see what comes back</div>
 </div>
 <p class="lede" style="margin-top:2rem;">It's a template repository &mdash; clone it, gut the parts that don't fit your team, keep the gates.</p>
-<div class="footer-note" style="position:static; margin-top:2.5rem;">Design by Contract &middot; Bertrand Meyer, 1980s &nbsp;&mdash;&nbsp; applied to human/AI workflow, 2026</div>
+<div class="footer-note" style="position:static; margin-top:2.5rem;">Design by Contract &middot; <a href="https://bertrandmeyer.com/category/design-by-contract/" target="_blank" rel="noopener">Bertrand Meyer</a>, 1980s &nbsp;&mdash;&nbsp; applied to human/AI workflow, 2026</div>
 `);
 
 /* ---------- engine ---------- */
