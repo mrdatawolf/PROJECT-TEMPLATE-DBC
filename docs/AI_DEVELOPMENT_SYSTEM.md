@@ -68,13 +68,26 @@ Only after those are understood should implementation begin.
 
 ---
 
-## Design by Contract
+## Contract-Driven Development, Inspired by Design by Contract
+
+Bertrand Meyer's Design by Contract specifies reciprocal obligations between
+software clients and suppliers through precise preconditions, postconditions,
+and invariants. This development system adapts that discipline to collaboration
+between humans and AI agents; it does not reproduce Eiffel's programming-language
+mechanism or claim that the surrounding governance workflow is part of Meyer's
+method.
 
 Implementation should follow approved behavioral contracts.
 
 The implementation agent is responsible for satisfying the contract—not inventing it.
 
 Contracts define observable behavior rather than implementation details.
+
+In this adaptation, the human side supplies approved scope and the conditions
+under which work is authorized. The implementation agent guarantees the required
+behavior and preserves stated invariants at the handoff boundary. Independent
+review checks those claims, while human acceptance remains a governance decision
+rather than a postcondition.
 
 Where practical, contracts should describe:
 

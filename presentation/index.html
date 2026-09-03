@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Design by Contract for Human/AI Development</title>
+<title>Contract-Driven Human/AI Development</title>
 <style>
   :root{
     --bg: #0b0f14;
@@ -424,17 +424,17 @@ const slides = [];
 slides.push(`
 <div class="center-slide" style="display:flex;flex-direction:column;height:100%;">
   <div class="kicker">a talk for people who ship code, not just prompts</div>
-  <h1>Design by Contract<br>for Human/AI Development</h1>
-  <p class="subtitle">Bertrand Meyer formalized obligations between a component and its caller.
-  This applies that same discipline to the obligations between a human and the AI agents writing their code.</p>
+  <h1>Contract-Driven<br>Human/AI Development</h1>
+  <p class="subtitle">Applying ideas from Bertrand Meyer's Design by Contract to the obligations
+  between humans and the AI agents writing their code.</p>
   <div class="badge-row" style="justify-content:center;">
     <span class="badge ok">preconditions</span>
     <span class="badge ok">postconditions</span>
     <span class="badge ok">invariants</span>
     <span class="badge warn">applied to a dev process, not a function signature</span>
   </div>
-  <div class="footer-note" style="position:static; margin-top:2rem; text-align:center;">Design by Contract originates with
-<a href="https://bertrandmeyer.com/category/design-by-contract/" target="_blank" rel="noopener">Bertrand Meyer</a> &mdash; this talk applies it, doesn't claim it.</div>
+  <div class="footer-note" style="position:static; margin-top:2rem; text-align:center;">Inspired by Design by Contract, originated by
+<a href="https://bertrandmeyer.com/category/design-by-contract/" target="_blank" rel="noopener">Bertrand Meyer</a> &mdash; an adaptation of its discipline, not its programming-language mechanism.</div>
 </div>
 `);
 
@@ -449,7 +449,7 @@ slides.push(`
     <li>The next five panels are about how that grid gets filled in.</li>
   </ul>
   <figure class="shot">
-    <img src="images/panel-1-backlog.png" alt="A 9x9 grid representing a software project backlog, all cells white/not-started.">
+    <img src="images/panel-1-backlog.svg" alt="A 9x9 grid representing a software project backlog, all cells white/not-started.">
     <figcaption>1. Software Project Backlog (To Be Built)</figcaption>
   </figure>
 </div>
@@ -498,6 +498,7 @@ slides.push(`
     <li>Design spec, coding, static analysis, test generation, execution, spec review, final QA &mdash; each station gets the tool suited to it.</li>
     <li>Humans still own the spec and the final review.</li>
     <li>Same pipeline shape as the solo developer &mdash; just staffed differently.</li>
+    <li>None of these stations are AI-exclusive &mdash; people could staff any/all of them. AI's edge is speed on boilerplate coding and test execution.</li>
   </ul>
   <figure class="shot">
     <img src="images/panel-3-ai-factory.png" alt="One work item flowing through specialized human and AI roles: design spec, Codex, ChatGPT, Copilot, automated tests, human QA.">
@@ -548,11 +549,10 @@ slides.push(`
   <ul class="pt">
     <li>Human vision and a project architect drive a planning AI toward contracts, interfaces, acceptance criteria, constraints, and task decomposition.</li>
     <li>The AI assists planning &mdash; it doesn't replace the human's ownership of vision and architecture.</li>
-    <li>This is Design by Contract, drawn as a diagram. Everything from here on explains it in words.</li>
   </ul>
   <figure class="shot">
     <img src="images/panel-6-governance.png" alt="Human vision and project architect directing a planning AI to produce contracts, feeding a decomposition engine and work package queue.">
-    <figcaption>6. Governance &amp; Planning (Design by Contract)</figcaption>
+    <figcaption>6. Governance &amp; Planning</figcaption>
   </figure>
 </div>
 `);
@@ -591,7 +591,7 @@ slides.push(`
     <ul class="pt">
       <li><strong>Precondition</strong> &mdash; what the caller must guarantee before calling.</li>
       <li><strong>Postcondition</strong> &mdash; what the routine guarantees in return, if the precondition held.</li>
-      <li><strong>Invariant</strong> &mdash; what must remain true throughout, for both sides.</li>
+      <li><strong>Invariant</strong> &mdash; a consistency property every operation must restore at externally observable boundaries.</li>
     </ul>
     <p class="lede" style="margin-top:1rem;">Break the contract, and it's clear <em>whose</em> bug it is.</p>
   </div>
@@ -613,13 +613,50 @@ slides.push(`
 <a href="https://bertrandmeyer.com/category/design-by-contract/" target="_blank" rel="noopener">bertrandmeyer.com/category/design-by-contract</a></p>
 `);
 
+// 10b. Foundational distinction
+slides.push(`
+<div class="kicker amber">the foundational adaptation</div>
+<h2>Same principle, different enforcement</h2>
+<p class="lede" style="margin-bottom:1.5rem;">Both approaches make obligations explicit. They operate at different levels and establish confidence differently.</p>
+<div class="cols">
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">Meyer's Design by Contract</span></div>
+    <div class="term-body"><span class="h">Purpose</span>
+Specify software-component correctness.
+
+<span class="h">Form</span>
+Precise Boolean assertions attached to
+routines and classes.
+
+<span class="h">Enforcement</span>
+In Eiffel, assertions can be checked
+automatically at runtime.</div>
+  </div>
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">This human/AI system</span></div>
+    <div class="term-body"><span class="h">Purpose</span>
+Coordinate bounded, reviewable development work.
+
+<span class="h">Form</span>
+Mostly human-readable contracts, tasks,
+and acceptance criteria.
+
+<span class="h">Enforcement</span>
+Tests, independent review, workflow controls,
+and final human acceptance.</div>
+  </div>
+</div>
+<blockquote class="q" style="margin-top:1.5rem;">Foundational decision: borrow DbC's discipline of explicit obligations without presenting process documents as executable assertions.</blockquote>
+`);
+
 // 11. The reframe
 slides.push(`
 <div class="kicker blue">the reframe</div>
-<h2>Same discipline, one level up</h2>
-<p class="lede">The routine/caller pair becomes the human/agent pair. The obligations don't change in
-spirit &mdash; explicit expectations, verifiable results, clear responsibility &mdash; only the
-thing being called.</p>
+<h2>Adapt the discipline one level up</h2>
+<p class="lede">We use the routine/caller relationship as a model for the human/agent relationship:
+explicit expectations, verifiable results, and clear responsibility.</p>
 <div class="term" style="max-width:70ch;">
   <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
     <span class="term-path">CLAUDE.md &mdash; foundational rules</span></div>
@@ -636,15 +673,16 @@ thing being called.</p>
 // 12. Mapping table
 slides.push(`
 <div class="kicker">the mapping</div>
-<h2>Contract vocabulary, ported</h2>
+<h2>Contract concepts, adapted</h2>
 <table class="map">
-  <tr><th>DbC term</th><th>Process equivalent</th></tr>
-  <tr><td class="dbc">precondition</td><td class="proc">A task must be sitting in <code>tasks/approved/</code> before any implementation begins.</td></tr>
-  <tr><td class="dbc">postcondition</td><td class="proc">Acceptance criteria are met <em>and</em> an independent reviewer has verified it &mdash; not just "the agent thinks it's done."</td></tr>
-  <tr><td class="dbc">invariant</td><td class="proc">Unrelated behavior and user changes are preserved across the whole change, not just the touched lines.</td></tr>
-  <tr><td class="dbc">exception</td><td class="proc">Ambiguity is escalated to the human, not silently resolved by guessing the "sensible" answer.</td></tr>
-  <tr><td class="dbc">interface</td><td class="proc">A contract document describes required <em>behavior</em> &mdash; it does not prescribe implementation.</td></tr>
+  <tr><th>DbC concept</th><th>Workflow adaptation</th></tr>
+  <tr><td class="dbc">precondition</td><td class="proc">Approved scope, dependencies, and required context define when implementation is authorized to begin.</td></tr>
+  <tr><td class="dbc">postcondition</td><td class="proc">At handoff, the implementation satisfies the contract and its observable acceptance criteria.</td></tr>
+  <tr><td class="dbc">invariant</td><td class="proc">At reviewable boundaries, unrelated behavior and user changes remain preserved.</td></tr>
+  <tr><td class="dbc">interface</td><td class="proc">A contract describes required <em>behavior</em> without prescribing unnecessary implementation details.</td></tr>
+  <tr><td class="dbc">contract checking</td><td class="proc">Independent review checks the claimed postconditions and invariants; human acceptance is a separate governance decision.</td></tr>
 </table>
+<p class="lede" style="margin-top:1rem; font-size:1rem;">Ambiguity escalation belongs to contract design: an unclear contract is not ready for implementation. It is not the process equivalent of a DbC exception.</p>
 `);
 
 // 13. State machine
@@ -922,7 +960,7 @@ slides.push(`
   <div><span class="n">4</span> Ask your AI to draft a task for something you want to build &mdash; see what comes back</div>
 </div>
 <p class="lede" style="margin-top:2rem;">It's a template repository &mdash; clone it, gut the parts that don't fit your team, keep the gates.</p>
-<div class="footer-note" style="position:static; margin-top:2.5rem;">Design by Contract &middot; <a href="https://bertrandmeyer.com/category/design-by-contract/" target="_blank" rel="noopener">Bertrand Meyer</a>, 1980s &nbsp;&mdash;&nbsp; applied to human/AI workflow, 2026</div>
+<div class="footer-note" style="position:static; margin-top:2.5rem;">Contract-driven human/AI development, inspired by <a href="https://bertrandmeyer.com/category/design-by-contract/" target="_blank" rel="noopener">Bertrand Meyer's Design by Contract</a> &nbsp;&mdash;&nbsp; process adaptation, 2026</div>
 `);
 
 /* ---------- engine ---------- */
