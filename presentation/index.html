@@ -390,6 +390,35 @@
     h2{ font-size: 1.6rem; }
     .statgrid{ grid-template-columns: repeat(2,1fr); }
   }
+
+  /* phones */
+  @media (max-width: 600px){
+    .slide{
+      padding: 7vh 6vw 9vh 6vw;
+      justify-content: flex-start;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .kicker{ font-size: 0.72rem; }
+    h1{ font-size: 1.7rem; }
+    h2{ font-size: 1.3rem; }
+    .subtitle{ font-size: 1rem; max-width: 100%; }
+    p.lede{ font-size: 0.95rem; max-width: 100%; }
+    ul.pt, ol.pt{ font-size: 0.92rem; line-height: 1.5; }
+    .cols{ gap: 1.2rem; }
+    .term-body{ font-size: 0.72rem; padding: 0.7rem 0.8rem; max-height: 40vh; }
+    .term-path{ font-size: 0.65rem; }
+    table.map{ font-size: 0.8rem; }
+    table.map th, table.map td{ padding: 0.45rem 0.5rem; }
+    .statgrid{ grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .stat{ padding: 0.7rem 0.5rem; }
+    .stat .num{ font-size: 1.4rem; }
+    .flow{ font-size: 0.85rem; gap: 0.3rem 0.2rem; }
+    .steps{ font-size: 0.92rem; }
+    .footer-note{ position: static; margin-top: 1.2rem; font-size: 0.68rem; }
+    #hint{ display: none; }
+    #counter{ font-size: 0.68rem; }
+  }
 </style>
 </head>
 <body>
