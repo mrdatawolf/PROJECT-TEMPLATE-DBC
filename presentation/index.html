@@ -182,6 +182,27 @@
   .term-body .bad{ color: var(--red); }
   .term-body .good{ color: var(--green); }
 
+  .shot{
+    margin: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    background: var(--bg-panel);
+  }
+  .shot img{
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .shot figcaption{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    padding: 0.5rem 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
   table.map{
     width: 100%;
     border-collapse: collapse;
@@ -411,7 +432,109 @@ slides.push(`
 </div>
 `);
 
-// 2. The problem
+// 2. Intro panel 1 - Backlog
+slides.push(`
+<div class="kicker">the backlog</div>
+<h2>Every project starts as a grid of unstarted work</h2>
+<div class="cols">
+  <ul class="pt">
+    <li>A backlog is just squares waiting to be picked up &mdash; nothing here yet says who does the work, or how.</li>
+    <li>Every row, every column: a unit of work, not started.</li>
+    <li>The next five panels are about how that grid gets filled in.</li>
+  </ul>
+  <figure class="shot">
+    <img src="images/panel-1-backlog.png" alt="A 9x9 grid representing a software project backlog, all cells white/not-started.">
+    <figcaption>1. Software Project Backlog (To Be Built)</figcaption>
+  </figure>
+</div>
+`);
+
+// 3. Intro panel 2 - Solo developer
+slides.push(`
+<div class="kicker">how it's usually done</div>
+<h2>One person, every step, every time</h2>
+<div class="cols">
+  <ul class="pt">
+    <li>Design review, coding, unit tests, test execution, QA, integration &mdash; same developer at every station.</li>
+    <li>Context-switching cost is invisible until it isn't.</li>
+    <li>No independent check exists inside this loop.</li>
+  </ul>
+  <figure class="shot">
+    <img src="images/panel-2-solo-developer.png" alt="One work item flowing through all development steps performed by the same solo developer.">
+    <figcaption>2. Traditional Solo Developer (One Person Does Everything)</figcaption>
+  </figure>
+</div>
+`);
+
+// 4. Intro panel 3 - AI-assisted factory
+slides.push(`
+<div class="kicker blue">the shift</div>
+<h2>Specialize the steps, not just the person</h2>
+<div class="cols">
+  <ul class="pt">
+    <li>Design spec, coding, static analysis, test generation, execution, spec review, final QA &mdash; each station gets the tool suited to it.</li>
+    <li>Humans still own the spec and the final review.</li>
+    <li>Same pipeline shape as the solo developer &mdash; just staffed differently.</li>
+  </ul>
+  <figure class="shot">
+    <img src="images/panel-3-ai-factory.png" alt="One work item flowing through specialized human and AI roles: design spec, Codex, ChatGPT, Copilot, automated tests, human QA.">
+    <figcaption>3. AI-Assisted Software Factory (Specialized Roles)</figcaption>
+  </figure>
+</div>
+`);
+
+// 5. Intro panel 4 - Parallel pipelines
+slides.push(`
+<div class="kicker blue">scale out</div>
+<h2>Many work items, moving in parallel</h2>
+<div class="cols">
+  <ul class="pt">
+    <li>The single-item pipeline, replicated across many work items at once.</li>
+    <li>Parallelism is what actually clears a backlog.</li>
+    <li>Governance doesn't change yet &mdash; that's still ahead.</li>
+  </ul>
+  <figure class="shot">
+    <img src="images/panel-4-parallel.png" alt="Multiple work items moving through parallel specialized pipelines simultaneously.">
+    <figcaption>4. Many Work Items in Parallel (Scale Out)</figcaption>
+  </figure>
+</div>
+`);
+
+// 6. Intro panel 5 - Integration
+slides.push(`
+<div class="kicker">closing the loop</div>
+<h2>Completed work integrates back into the project</h2>
+<div class="cols">
+  <ul class="pt">
+    <li>Every pipeline reports back into the same shared grid.</li>
+    <li>Not started &rarr; in progress &rarr; in QA &rarr; integrated: the whole lifecycle, visible at once.</li>
+    <li>Nothing skips past QA without going through integration.</li>
+  </ul>
+  <figure class="shot">
+    <img src="images/panel-5-integration.png" alt="Completed work from parallel pipelines flowing back into the integrated project grid.">
+    <figcaption>5. Integration Back into the Project</figcaption>
+  </figure>
+</div>
+`);
+
+// 7. Intro panel 6 - Governance & DbC
+slides.push(`
+<div class="kicker amber">who's steering</div>
+<h2>Governance still has to be human-led</h2>
+<div class="cols">
+  <ul class="pt">
+    <li>Human vision and a project architect drive a planning AI toward contracts, interfaces, acceptance criteria, constraints, and task decomposition.</li>
+    <li>The AI assists planning &mdash; it doesn't replace the human's ownership of vision and architecture.</li>
+    <li>This is Design by Contract, drawn as a diagram. Everything from here on explains it in words.</li>
+  </ul>
+  <figure class="shot">
+    <img src="images/panel-6-governance.png" alt="Human vision and project architect directing a planning AI to produce contracts, feeding a decomposition engine and work package queue.">
+    <figcaption>6. Governance &amp; Planning (Design by Contract)</figcaption>
+  </figure>
+</div>
+`);
+
+// 8. The problem
 slides.push(`
 <div class="kicker amber">the problem</div>
 <h2>AI coding agents are fast. That's not the same as trustworthy.</h2>
@@ -435,7 +558,7 @@ different ways?"
 </div>
 `);
 
-// 3. Origin of DbC
+// 9. Origin of DbC
 slides.push(`
 <div class="kicker">origin</div>
 <h2>Design by Contract (Meyer, Eiffel, 1980s)</h2>
@@ -466,7 +589,7 @@ slides.push(`
 <p class="footer-note">Meyer, <em>Object-Oriented Software Construction</em>, Prentice Hall, 1988 / 1997</p>
 `);
 
-// 4. The reframe
+// 10. The reframe
 slides.push(`
 <div class="kicker blue">the reframe</div>
 <h2>Same discipline, one level up</h2>
@@ -486,7 +609,7 @@ thing being called.</p>
 </div>
 `);
 
-// 5. Mapping table
+// 11. Mapping table
 slides.push(`
 <div class="kicker">the mapping</div>
 <h2>Contract vocabulary, ported</h2>
@@ -500,7 +623,7 @@ slides.push(`
 </table>
 `);
 
-// 6. State machine
+// 12. State machine
 slides.push(`
 <div class="kicker">the state machine</div>
 <h2>A task's directory <em>is</em> its state</h2>
@@ -524,7 +647,7 @@ location is the single source of truth. If you've ever trusted <code>/proc</code
 </div>
 `);
 
-// 7. Authority rules
+// 13. Authority rules
 slides.push(`
 <div class="kicker">who may move what</div>
 <h2>Every transition has an owner</h2>
@@ -552,7 +675,7 @@ slides.push(`
 </div>
 `);
 
-// 8. Roles as specialists
+// 14. Roles as specialists
 slides.push(`
 <div class="kicker">roles</div>
 <h2>Specialists, not one generalist agent</h2>
@@ -572,7 +695,7 @@ Unix tools applies to agent roles.</p>
 </div>
 `);
 
-// 9. Contract structure
+// 15. Contract structure
 slides.push(`
 <div class="kicker">the artifact</div>
 <h2>What a contract document actually contains</h2>
@@ -599,7 +722,7 @@ Approved by: &middot; Approved date: &middot; Related tasks:
 </div>
 `);
 
-// 10. Real example CONTRACT-007
+// 16. Real example CONTRACT-007
 slides.push(`
 <div class="kicker blue">real example &mdash; from a production repo</div>
 <h2>CONTRACT-007: REST validation, MeshtasticForeman</h2>
@@ -620,7 +743,7 @@ tightening validation could reject input that silently "succeeds" today. The con
 </div>
 `);
 
-// 11. ADR example
+// 17. ADR example
 slides.push(`
 <div class="kicker blue">real example &mdash; architecture decisions</div>
 <h2>ADR-002: PGlite worker-thread pattern</h2>
@@ -639,7 +762,7 @@ so we always spin it up inside a worker thread."</blockquote>
 </div>
 `);
 
-// 12. Living memory
+// 18. Living memory
 slides.push(`
 <div class="kicker">durable knowledge</div>
 <h2>The repository is the memory. The chat is not.</h2>
@@ -666,7 +789,7 @@ not in someone's memory of a stand-up.</div>
 </div>
 `);
 
-// 13. Proof at scale
+// 19. Proof at scale
 slides.push(`
 <div class="kicker amber">does this actually work?</div>
 <h2>MeshtasticForeman: this system, mid-flight</h2>
@@ -681,7 +804,7 @@ Not a toy example &mdash; the numbers as of this talk:</p>
 <p class="lede" style="margin-top:1.5rem; font-size:1.05rem;">Every one of those 38 completions has a recorded handoff and an independent review &mdash; not just a merged PR.</p>
 `);
 
-// 14. Scales down too
+// 20. Scales down too
 slides.push(`
 <div class="kicker amber">it also scales down</div>
 <h2>DM_Helper: day one of adoption</h2>
@@ -699,7 +822,7 @@ right.'</span> Escalate ... if it isn't already unambiguous."</div>
 it silently became a permissions redesign.</p>
 `);
 
-// 15. What you get
+// 21. What you get
 slides.push(`
 <div class="kicker">the payoff</div>
 <h2>What this actually buys you</h2>
@@ -717,7 +840,7 @@ slides.push(`
 </div>
 `);
 
-// 16. Try it / closing
+// 22. Try it / closing
 slides.push(`
 <div class="kicker">try it</div>
 <h2>Start here</h2>
