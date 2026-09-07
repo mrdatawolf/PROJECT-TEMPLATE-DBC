@@ -328,6 +328,131 @@
     font-weight: 700;
   }
 
+  /* pipeline diagram: line-icon style stations along a rail */
+  .pipeline{
+    position: relative;
+    display:flex;
+    align-items:flex-start;
+    gap: 0;
+    padding: 0.4rem 0.5rem 1.6rem;
+  }
+  .pipeline .rail{
+    position:absolute;
+    left: 3%; right:3%;
+    top: 4.7rem;
+    height: 2px;
+    background: var(--border);
+  }
+  .pipeline .station{
+    position:relative;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+  .pipeline .station .num{
+    font-family: var(--mono);
+    font-size:0.68rem;
+    color: var(--text-dim);
+    margin-bottom:0.25rem;
+  }
+  .pipeline .station .name{
+    font-family: var(--mono);
+    font-size:0.62rem;
+    color: var(--text-dim);
+    line-height:1.25;
+    min-height: 2.3em;
+    margin-bottom:0.5rem;
+    padding: 0 0.15rem;
+  }
+  .pipeline .box{
+    width: 3.1rem; height:3.1rem;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background: var(--bg-panel);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    z-index:1;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  }
+  .pipeline .box svg{ width:1.6rem; height:1.6rem; overflow:visible; }
+  .pipeline .box.dyn{ animation: stationBorder 8s infinite; }
+  .pipeline .worker{
+    position:relative;
+    font-family: var(--mono);
+    font-size:0.6rem;
+    margin-top:0.5rem;
+    color: var(--text-dim);
+    min-height: 1.4em;
+  }
+  .pipeline .cycle-layer{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0;
+    animation: stationCycle 8s infinite;
+  }
+  .pipeline .cycle-layer:nth-of-type(1){ animation-delay: 0s; }
+  .pipeline .cycle-layer:nth-of-type(2){ animation-delay: 2s; }
+  .pipeline .cycle-layer:nth-of-type(3){ animation-delay: 4s; }
+  .pipeline .cycle-layer:nth-of-type(4){ animation-delay: 6s; }
+  .pipeline .worker .cycle-layer{ white-space:nowrap; }
+
+  @keyframes stationCycle{
+    0%{ opacity:0; }
+    4%{ opacity:1; }
+    21%{ opacity:1; }
+    25%{ opacity:0; }
+    100%{ opacity:0; }
+  }
+  @keyframes stationBorder{
+    0%, 48%{ border-color: var(--blue); }
+    52%, 98%{ border-color: var(--green); }
+    100%{ border-color: var(--blue); }
+  }
+
+  /* conveyor variant: one row, a traveling work-item token instead of per-station cycling */
+  .pipeline .endcap{
+    position:absolute;
+    top: 4.7rem;
+    transform: translateY(-50%);
+    width: 0.85rem; height:0.85rem;
+    border-radius:3px;
+    z-index:1;
+  }
+  .pipeline .endcap.in{ left: 3%; margin-left: -1.15rem; background:var(--blue); }
+  .pipeline .endcap.out{ right: 3%; margin-right: -1.15rem; background:var(--green); }
+  .pipeline .token{
+    position:absolute;
+    top: 4.7rem;
+    width: 0.7rem; height:0.7rem;
+    border-radius:3px;
+    background: var(--amber);
+    transform: translate(-50%, -50%);
+    z-index:0;
+    animation-name: travelToken;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes travelToken{
+    0%{ left:3%; opacity:0; }
+    3%{ opacity:1; }
+    88%{ left:97%; opacity:1; }
+    94%{ opacity:0; }
+    100%{ left:97%; opacity:0; }
+  }
+  .pipeline .box.wide{ width:4.5rem; }
+  .pipeline .box .pair{ display:flex; align-items:center; gap:0.2rem; }
+  .pipeline .box .pair svg{ width:1.25rem; height:1.25rem; }
+  .pipeline .box .plus{ font-family: var(--mono); font-size:0.8rem; color: var(--text-dim); }
+  .pipeline-caption{
+    text-align:center;
+    color: var(--blue);
+    font-weight:600;
+    font-size:1.05rem;
+    margin-top:1.6rem;
+  }
+
   /* UI chrome */
   #progress{
     position: fixed;
@@ -415,6 +540,13 @@
     .stat .num{ font-size: 1.4rem; }
     .flow{ font-size: 0.85rem; gap: 0.3rem 0.2rem; }
     .steps{ font-size: 0.92rem; }
+    .pipeline{ overflow-x: auto; padding-bottom: 1.6rem; }
+    .pipeline .station{ min-width: 4.6rem; }
+    .pipeline .station:has(.box.wide){ min-width: 5.6rem; }
+    .pipeline .rail{ left: 0; right: 0; }
+    .pipeline .endcap.in{ left:0; margin-left:-0.3rem; }
+    .pipeline .endcap.out{ right:0; margin-right:-0.3rem; }
+    .pipeline-caption{ font-size: 0.9rem; }
     .footer-note{ position: static; margin-top: 1.2rem; font-size: 0.68rem; }
     #hint{ display: none; }
     #counter{ font-size: 0.68rem; }
@@ -467,7 +599,49 @@ slides.push(`
 </div>
 `);
 
-// 2. Intro panel 1 - Backlog
+// 2. The actual shift
+slides.push(`
+<div class="kicker amber">the actual shift</div>
+<h2>Building got cheap. Deciding what to build didn't.</h2>
+<div class="cols">
+  <ul class="pt">
+    <li>For decades, careful up-front thinking was the discipline you rationed &mdash; building and rebuilding was slow, so teams often skipped straight to code and fixed the design later, if ever.</li>
+    <li>AI collapses the cost of execution: writing, testing, and rewriting code is now fast and, more importantly, <strong>disposable</strong>.</li>
+    <li>What doesn't get cheaper: deciding what "correct" means for this change, and who's accountable if it isn't.</li>
+    <li>That's the discipline this whole system is actually about. Everything downstream of it is just fast execution of a decision already made carefully.</li>
+  </ul>
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">cost of doing business</span></div>
+    <div class="term-body"><span class="h">Before</span>
+  thinking   cheap to skip
+  building   <span class="bad">expensive to redo</span>
+
+<span class="h">After (AI-assisted)</span>
+  thinking   <span class="n">the hard part now</span>
+  building   <span class="good">cheap to redo</span></div>
+  </div>
+</div>
+`);
+
+// 2b. The loop
+slides.push(`
+<div class="kicker blue">the loop this system runs</div>
+<h2>Think once. Execute fast. Repeat.</h2>
+<p class="lede" style="margin-bottom:1.8rem;">Once intent is written down precisely as a contract, execution stops being precious &mdash;
+it doesn't matter whether the implementer is one AI model, a different one next week, or a person.
+When requirements change, you don't patch the old assumptions: you write a new contract and let execution catch up, at AI speed.</p>
+<div class="flow">
+  <span class="state human">contract</span>
+  <span class="arrow">&mdash;<span class="label">fast, disposable execution</span>&rarr;</span>
+  <span class="state agent">working software</span>
+  <span class="arrow">&mdash;<span class="label">accept or reject</span>&rarr;</span>
+  <span class="state human">next contract</span>
+</div>
+<p class="lede" style="margin-top:1.6rem; font-size:1.05rem;">Rinse and repeat &mdash; the pipeline in the next few slides is what one pass through that loop looks like up close. The pipeline isn't the point. The loop is.</p>
+`);
+
+// 3. Intro panel 1 - Backlog
 slides.push(`
 <div class="kicker">the backlog</div>
 <h2>Every project starts as a grid of unstarted work</h2>
@@ -488,52 +662,426 @@ slides.push(`
 slides.push(`
 <div class="kicker">how it's usually done</div>
 <h2>One person, every step, every time</h2>
-<div class="cols">
-  <ul class="pt">
-    <li>Design review, coding, unit tests, test execution, QA, integration &mdash; same developer at every station.</li>
-    <li>Context-switching cost is invisible until it isn't.</li>
-    <li>No independent check exists inside this loop.</li>
-  </ul>
-  <figure class="shot">
-    <img src="images/panel-2-solo-developer.png" alt="One work item flowing through all development steps performed by the same solo developer.">
-    <figcaption>2. Traditional Solo Developer (One Person Does Everything)</figcaption>
-  </figure>
-</div>
+<ul class="pt tight" style="margin-bottom:1.2rem;">
+  <li>Design review, coding, unit tests, test execution, QA, integration &mdash; same developer at every station.</li>
+  <li>Context-switching cost is invisible until it isn't. No independent check exists inside this loop.</li>
+</ul>
+<figure class="shot">
+  <div class="pipeline">
+    <div class="rail"></div>
+    <div class="endcap in"></div>
+    <div class="endcap out"></div>
+    <div class="token" style="animation-duration:16s"></div>
+
+    <div class="station">
+      <div class="num">1</div>
+      <div class="name">Design Review</div>
+      <div class="box" style="border-color:var(--green);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+          <rect x="5" y="2.5" width="14" height="19" rx="2"/>
+          <line x1="8" y1="8" x2="16" y2="8"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+          <line x1="8" y1="16" x2="13" y2="16"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">2</div>
+      <div class="name">Coding</div>
+      <div class="box" style="border-color:var(--green);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+          <path d="M9 6L4 12l5 6"/>
+          <path d="M15 6l5 6-5 6"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">3</div>
+      <div class="name">Unit Test Creation</div>
+      <div class="box" style="border-color:var(--green);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+          <rect x="4" y="4" width="3.6" height="3.6" rx="0.8"/>
+          <line x1="10.5" y1="5.8" x2="20" y2="5.8"/>
+          <rect x="4" y="10.2" width="3.6" height="3.6" rx="0.8"/>
+          <line x1="10.5" y1="12" x2="20" y2="12"/>
+          <rect x="4" y="16.4" width="3.6" height="3.6" rx="0.8"/>
+          <line x1="10.5" y1="18.2" x2="20" y2="18.2"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">4</div>
+      <div class="name">Test Execution</div>
+      <div class="box" style="border-color:var(--green);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+          <circle cx="12" cy="12" r="8.5"/>
+          <path d="M10 9l5.5 3-5.5 3z" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">5</div>
+      <div class="name">Coding</div>
+      <div class="box" style="border-color:var(--green);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+          <path d="M9 6L4 12l5 6"/>
+          <path d="M15 6l5 6-5 6"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">6</div>
+      <div class="name">QA Review</div>
+      <div class="box" style="border-color:var(--green);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+          <circle cx="10.5" cy="10.5" r="6"/>
+          <line x1="15" y1="15" x2="20" y2="20"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">7</div>
+      <div class="name">Integration</div>
+      <div class="box" style="border-color:var(--green);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+          <path d="M9 4h4a1.5 1.5 0 0 1 0 3 1.5 1.5 0 0 0 0 3h4v4a1.5 1.5 0 0 1-3 0 1.5 1.5 0 0 0-3 0v4H7a1.5 1.5 0 0 1 0-3 1.5 1.5 0 0 0 0-3H4V8a1.5 1.5 0 0 1 3 0 1.5 1.5 0 0 0 3 0V4z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <p class="pipeline-caption">Same person, every step.</p>
+  <figcaption>2. Traditional Solo Developer (One Person Does Everything)</figcaption>
+</figure>
 `);
 
 // 4. Intro panel 2b - Human + AI paired
 slides.push(`
 <div class="kicker blue">pairing up</div>
 <h2>Same steps, now with an AI at every station too</h2>
-<div class="cols">
-  <ul class="pt">
-    <li>Nothing about the pipeline shape changes yet &mdash; same seven stations, same order.</li>
-    <li>Every station now has two workers: the human's judgment, the AI's throughput.</li>
-    <li>Specialization comes next &mdash; first, just add the second worker.</li>
-  </ul>
-  <figure class="shot">
-    <img src="images/panel-2b-human-ai-together.png" alt="The same seven development stations as the solo developer, but now each station has both a human and an AI working it together.">
-    <figcaption>2B. Human + AI, Paired at Every Step</figcaption>
-  </figure>
-</div>
+<ul class="pt tight" style="margin-bottom:1.2rem;">
+  <li>Nothing about the pipeline shape changes yet &mdash; same seven stations, same order.</li>
+  <li>Every station now has two workers: the human's judgment, the AI's throughput. Specialization comes next &mdash; first, just add the second worker.</li>
+</ul>
+<figure class="shot">
+  <div class="pipeline">
+    <div class="rail"></div>
+    <div class="endcap in"></div>
+    <div class="endcap out"></div>
+    <div class="token" style="animation-duration:8s"></div>
+
+    <div class="station">
+      <div class="num">1</div>
+      <div class="name">Design Review</div>
+      <div class="box wide" style="border-color:var(--green);">
+        <div class="pair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+            <rect x="5" y="2.5" width="14" height="19" rx="2"/>
+            <line x1="8" y1="8" x2="16" y2="8"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+            <line x1="8" y1="16" x2="13" y2="16"/>
+          </svg>
+          <span class="plus">+</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+            <rect x="5" y="8" width="14" height="10" rx="3"/>
+            <line x1="12" y1="8" x2="12" y2="4"/>
+            <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="9" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="15" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">2</div>
+      <div class="name">Coding</div>
+      <div class="box wide" style="border-color:var(--green);">
+        <div class="pair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+            <path d="M9 6L4 12l5 6"/>
+            <path d="M15 6l5 6-5 6"/>
+          </svg>
+          <span class="plus">+</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+            <rect x="5" y="8" width="14" height="10" rx="3"/>
+            <line x1="12" y1="8" x2="12" y2="4"/>
+            <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="9" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="15" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">3</div>
+      <div class="name">Unit Test Creation</div>
+      <div class="box wide" style="border-color:var(--green);">
+        <div class="pair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+            <rect x="4" y="4" width="3.6" height="3.6" rx="0.8"/>
+            <line x1="10.5" y1="5.8" x2="20" y2="5.8"/>
+            <rect x="4" y="10.2" width="3.6" height="3.6" rx="0.8"/>
+            <line x1="10.5" y1="12" x2="20" y2="12"/>
+            <rect x="4" y="16.4" width="3.6" height="3.6" rx="0.8"/>
+            <line x1="10.5" y1="18.2" x2="20" y2="18.2"/>
+          </svg>
+          <span class="plus">+</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+            <rect x="5" y="8" width="14" height="10" rx="3"/>
+            <line x1="12" y1="8" x2="12" y2="4"/>
+            <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="9" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="15" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">4</div>
+      <div class="name">Test Execution</div>
+      <div class="box wide" style="border-color:var(--green);">
+        <div class="pair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+            <circle cx="12" cy="12" r="8.5"/>
+            <path d="M10 9l5.5 3-5.5 3z" fill="currentColor" stroke="none"/>
+          </svg>
+          <span class="plus">+</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+            <rect x="5" y="8" width="14" height="10" rx="3"/>
+            <line x1="12" y1="8" x2="12" y2="4"/>
+            <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="9" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="15" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">5</div>
+      <div class="name">Coding</div>
+      <div class="box wide" style="border-color:var(--green);">
+        <div class="pair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+            <path d="M9 6L4 12l5 6"/>
+            <path d="M15 6l5 6-5 6"/>
+          </svg>
+          <span class="plus">+</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+            <rect x="5" y="8" width="14" height="10" rx="3"/>
+            <line x1="12" y1="8" x2="12" y2="4"/>
+            <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="9" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="15" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">6</div>
+      <div class="name">QA Review</div>
+      <div class="box wide" style="border-color:var(--green);">
+        <div class="pair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+            <circle cx="10.5" cy="10.5" r="6"/>
+            <line x1="15" y1="15" x2="20" y2="20"/>
+          </svg>
+          <span class="plus">+</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+            <rect x="5" y="8" width="14" height="10" rx="3"/>
+            <line x1="12" y1="8" x2="12" y2="4"/>
+            <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="9" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="15" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">7</div>
+      <div class="name">Integration</div>
+      <div class="box wide" style="border-color:var(--green);">
+        <div class="pair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+            <path d="M9 4h4a1.5 1.5 0 0 1 0 3 1.5 1.5 0 0 0 0 3h4v4a1.5 1.5 0 0 1-3 0 1.5 1.5 0 0 0-3 0v4H7a1.5 1.5 0 0 1 0-3 1.5 1.5 0 0 0 0-3H4V8a1.5 1.5 0 0 1 3 0 1.5 1.5 0 0 0 3 0V4z"/>
+          </svg>
+          <span class="plus">+</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+            <rect x="5" y="8" width="14" height="10" rx="3"/>
+            <line x1="12" y1="8" x2="12" y2="4"/>
+            <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="9" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="15" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="pipeline-caption">Human judgment, AI throughput &mdash; at every single step.</p>
+  <figcaption>2B. Human + AI, Paired at Every Step &mdash; the work item moves twice as fast as the solo pipeline</figcaption>
+</figure>
 `);
 
 // 5. Intro panel 3 - AI-assisted factory
 slides.push(`
 <div class="kicker blue">the shift</div>
 <h2>Specialize the steps, not just the person</h2>
-<div class="cols">
-  <ul class="pt">
-    <li>Design spec, coding, static analysis, test generation, execution, spec review, final QA &mdash; each station gets the tool suited to it.</li>
-    <li>Humans still own the spec and the final review.</li>
-    <li>Same pipeline shape as the solo developer &mdash; just staffed differently.</li>
-    <li>None of these stations are AI-exclusive &mdash; people could staff any/all of them. AI's edge is speed on boilerplate coding and test execution.</li>
-  </ul>
-  <figure class="shot">
-    <img src="images/panel-3-ai-factory.png" alt="One work item flowing through specialized human and AI roles: design spec, Codex, ChatGPT, Copilot, automated tests, human QA.">
-    <figcaption>3. AI-Assisted Software Factory (Specialized Roles)</figcaption>
-  </figure>
-</div>
+<ul class="pt tight" style="margin-bottom:1.2rem;">
+  <li>Design spec, coding, static analysis, test generation, execution, spec review, final QA &mdash; each station gets the tool suited to it.</li>
+  <li>Humans still own the spec and the final review. Same pipeline shape as the solo developer &mdash; just staffed differently.</li>
+  <li>None of these stations are AI-exclusive &mdash; station 2 is shown cycling through its possible staffing: an AI model, a different AI model, a person, a different person. The <em>station</em> doesn't change. Who or what fills it does.</li>
+</ul>
+<figure class="shot">
+  <div class="pipeline">
+    <div class="rail"></div>
+
+    <div class="station">
+      <div class="num">1</div>
+      <div class="name">Design Spec</div>
+      <div class="box" style="border-color:var(--green);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+          <rect x="5" y="2.5" width="14" height="19" rx="2"/>
+          <line x1="8" y1="8" x2="16" y2="8"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+          <line x1="8" y1="16" x2="13" y2="16"/>
+        </svg>
+      </div>
+      <div class="worker" style="color:var(--green)">Human + AI Architect</div>
+    </div>
+
+    <div class="station">
+      <div class="num">2</div>
+      <div class="name">Coding</div>
+      <div class="box dyn">
+        <div class="cycle-layer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+            <rect x="5" y="8" width="14" height="10" rx="3"/>
+            <line x1="12" y1="8" x2="12" y2="4"/>
+            <circle cx="12" cy="3" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="9" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+            <circle cx="15" cy="13" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="cycle-layer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+            <path d="M4 5.5h16v10H9l-3.5 3v-3H4z"/>
+            <circle cx="8.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+            <circle cx="15.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="cycle-layer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+            <circle cx="12" cy="7" r="3.2"/>
+            <path d="M5.5 20c0-4.4 2.9-7 6.5-7s6.5 2.6 6.5 7"/>
+          </svg>
+        </div>
+        <div class="cycle-layer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+            <circle cx="12" cy="7" r="3.2"/>
+            <path d="M8.3 5.2c-.5 1.6-.3 3.4 1 4.6"/>
+            <path d="M15.7 5.2c.5 1.6.3 3.4-1 4.6"/>
+            <path d="M5 20c0-4.7 2.8-7.3 7-7.3s7 2.6 7 7.3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="worker">
+        <span class="cycle-layer" style="color:var(--blue)">Codex (LLM)</span>
+        <span class="cycle-layer" style="color:var(--blue)">ChatGPT (LLM)</span>
+        <span class="cycle-layer" style="color:var(--green)">Human Engineer</span>
+        <span class="cycle-layer" style="color:var(--green)">Human Engineer</span>
+      </div>
+    </div>
+
+    <div class="station">
+      <div class="num">3</div>
+      <div class="name">Static Analysis</div>
+      <div class="box" style="border-color:var(--blue);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+          <circle cx="10.5" cy="10.5" r="6"/>
+          <line x1="15" y1="15" x2="20" y2="20"/>
+        </svg>
+      </div>
+      <div class="worker" style="color:var(--blue)">ChatGPT (LLM)</div>
+    </div>
+
+    <div class="station">
+      <div class="num">4</div>
+      <div class="name">Unit Test Generation</div>
+      <div class="box" style="border-color:var(--blue);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+          <path d="M9.5 3h5"/>
+          <path d="M10.2 3v6.2L5 18.5a1.5 1.5 0 0 0 1.3 2.2h11.4a1.5 1.5 0 0 0 1.3-2.2L13.8 9.2V3"/>
+          <line x1="8" y1="15" x2="16" y2="15"/>
+        </svg>
+      </div>
+      <div class="worker" style="color:var(--blue)">Copilot (LLM)</div>
+    </div>
+
+    <div class="station">
+      <div class="num">5</div>
+      <div class="name">Test Execution</div>
+      <div class="box" style="border-color:var(--text-dim);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-dim)">
+          <rect x="4" y="4" width="16" height="6" rx="1.5"/>
+          <rect x="4" y="13" width="16" height="6" rx="1.5"/>
+          <circle cx="7.5" cy="7" r="0.8" fill="currentColor" stroke="none"/>
+          <circle cx="7.5" cy="16" r="0.8" fill="currentColor" stroke="none"/>
+          <path d="M14 16.2l1.4 1.4 2.6-2.8" stroke="var(--green)"/>
+        </svg>
+      </div>
+      <div class="worker">Automated Test Runner</div>
+    </div>
+
+    <div class="station">
+      <div class="num">6</div>
+      <div class="name">Spec Conformance Review</div>
+      <div class="box" style="border-color:var(--blue);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue)">
+          <path d="M4 5.5h16v10H9l-3.5 3v-3H4z"/>
+          <circle cx="8.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+          <circle cx="12" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+          <circle cx="15.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <div class="worker" style="color:var(--blue)">ChatGPT (LLM)</div>
+    </div>
+
+    <div class="station">
+      <div class="num">7</div>
+      <div class="name">Final QA</div>
+      <div class="box" style="border-color:var(--green);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)">
+          <circle cx="12" cy="7" r="3.2"/>
+          <path d="M5.5 20c0-4.4 2.9-7 6.5-7s6.5 2.6 6.5 7"/>
+        </svg>
+      </div>
+      <div class="worker" style="color:var(--green)">Human QA Engineer</div>
+    </div>
+
+    <div class="station">
+      <div class="num">8</div>
+      <div class="name">Integration</div>
+      <div class="box" style="border-color:var(--text-dim);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-dim)">
+          <path d="M9 4h4a1.5 1.5 0 0 1 0 3 1.5 1.5 0 0 0 0 3h4v4a1.5 1.5 0 0 1-3 0 1.5 1.5 0 0 0-3 0v4H7a1.5 1.5 0 0 1 0-3 1.5 1.5 0 0 0 0-3H4V8a1.5 1.5 0 0 1 3 0 1.5 1.5 0 0 0 3 0V4z"/>
+        </svg>
+      </div>
+      <div class="worker">Integration System</div>
+    </div>
+  </div>
+  <figcaption>3. AI-Assisted Software Factory (Specialized Roles) &mdash; station 2 cycles Codex &rarr; ChatGPT &rarr; a person &rarr; a different person</figcaption>
+</figure>
 `);
 
 // 6. Intro panel 4 - Parallel pipelines
