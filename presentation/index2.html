@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talk teleprompter</title>
+<style>
+  :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #0b0f14; color: #f0f3f6; }
+  * { box-sizing: border-box; }
+  body { margin: 0; height: 100dvh; display: flex; flex-direction: column; }
+  header { padding: 12px 20px; background: #10161d; border-bottom: 1px solid #30363d; }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  button, select, input { font: inherit; }
+  button, select, .file-label { padding: 8px 12px; border: 1px solid #59636e; border-radius: 6px; background: #212a35; color: inherit; }
+  button, .file-label { cursor: pointer; }
+  button:disabled { opacity: .45; cursor: default; }
+  #play { background: #7ee787; color: #0b0f14; min-width: 100px; font-weight: 700; }
+  label { display: inline-flex; align-items: center; gap: 8px; }
+  input[type=range] { width: 110px; }
+  :focus-visible { outline: 3px solid #79c0ff; outline-offset: 3px; }
+  .hint, #status { font-size: 14px; color: #b4bfca; margin: 10px 0 0; }
+  #viewport { flex: 1; overflow-y: auto; min-height: 0; scroll-behavior: auto; overflow-anchor: none; }
+  #script { max-width: 1000px; margin: auto; padding: 15vh 32px 65vh; font-size: 36px; line-height: 1.65; overflow-wrap: anywhere; }
+  section { margin-bottom: 2.5em; }
+  .section-label { color: #7ee787; font-size: 22px; letter-spacing: .08em; border-block: 2px solid #59636e; padding: 18px 0; }
+  h2, h3, h4 { line-height: 1.3; color: #79c0ff; font-size: 1.1em; }
+  p { margin: 0 0 1em; white-space: pre-line; }
+  pre { white-space: pre-wrap; font-size: .8em; }
+  code { color: #ffa657; }
+  #files { max-width: 250px; font-size: 14px; }
+  @media (max-width: 600px) { header { padding: 10px; } #script { padding-inline: 20px; } .hint { display: none; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="controls">
+    <button id="play" disabled>Start</button>
+    <button id="restart" disabled>Restart</button>
+    <button id="slower" aria-label="Scroll slower">−</button>
+    <label>Speed <input id="speed" type="range" min="5" max="150" step="5" value="35"><output id="speedValue">35 px/s</output></label>
+    <button id="faster" aria-label="Scroll faster">+</button>
+    <label>Text <input id="size" type="range" min="24" max="72" step="2" value="36"></label>
+    <button id="previous" disabled>← Previous page</button>
+    <label>Section <select id="sections" disabled aria-label="Jump to section"></select></label>
+    <button id="next" disabled>Next page →</button>
+    <output id="pageCount">0 / 0</output>
+    <button id="fullscreen">Full screen</button>
+    <label>Load .md files <input id="files" type="file" accept=".md,text/markdown" multiple></label>
+  </div>
+  <p class="hint">Space: start/pause · ↑/↓: faster/slower · ←/→: previous/next page · Home: restart · Select all Talk .md files to read the entire talk continuously.</p>
+  <p id="status" role="status">Loading talk…</p>
+</header>
+<main id="viewport" tabindex="0" aria-label="Teleprompter text">
+  <article id="script"></article>
+</main>
+<script>
+'use strict';
+// Update this list when adding sections, or select all Talk files using the picker.
+const talkFiles = ['Intro.md', ...Array.from({ length: 26 }, (_, i) => `p${i + 1}.md`)];
+const $ = id => document.getElementById(id);
+const viewport = $('viewport');
+let running = false, frame = 0, lastTime = null, position = 0, generation = 0;
+let loadedSections = [];
+
+// Escape source text before applying the supported inline Markdown formatting.
+function inline(text) {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+}
+function markdown(source) {
+  return source.replace(/\r\n?/g, '\n').split(/\n\s*\n/).map(block => {
+    if (/^\s*([-*_])\1\1+\s*$/.test(block)) return '<hr>';
+    const heading = /^(#{1,6})\s+([^\n]+)(?:\n([\s\S]*))?$/.exec(block);
+    if (heading) return `<h3>${inline(heading[2])}</h3>` + (heading[3] ? `<p>${inline(heading[3])}</p>` : '');
+    return `<p>${inline(block.replace(/\n/g, ' '))}</p>`;
+  }).join('');
+}
+function pause(message) {
+  running = false;
+  cancelAnimationFrame(frame);
+  lastTime = null;
+  $('play').textContent = 'Start';
+  if (message) $('status').textContent = message;
+}
+function tick(time) {
+  if (!running) return;
+  if (lastTime !== null) position += Number($('speed').value) * Math.min((time - lastTime) / 1000, .1);
+  lastTime = time;
+  viewport.scrollTop = position;
+  if (viewport.scrollTop >= viewport.scrollHeight - viewport.clientHeight - 1) {
+    pause('End of talk. Restart or choose a section to rehearse again.');
+    return;
+  }
+  frame = requestAnimationFrame(tick);
+}
+function toggle() {
+  if ($('play').disabled) return;
+  if (running) { pause('Paused.'); return; }
+  position = viewport.scrollTop;
+  running = true;
+  lastTime = null;
+  $('play').textContent = 'Pause';
+  $('status').textContent = 'Scrolling…';
+  frame = requestAnimationFrame(tick);
+}
+function speed(delta = 0) {
+  $('speed').value = Math.max(5, Math.min(150, Number($('speed').value) + delta));
+  $('speedValue').value = `${$('speed').value} px/s`;
+}
+function currentPage() {
+  const readingLine = viewport.getBoundingClientRect().top + viewport.clientHeight * .15 + 2;
+  let index = 0;
+  loadedSections.forEach((section, i) => { if (section.getBoundingClientRect().top <= readingLine) index = i; });
+  return index;
+}
+function updateNavigation(index = currentPage()) {
+  const count = loadedSections.length;
+  $('sections').value = String(index);
+  $('pageCount').textContent = count ? `${index + 1} / ${count}` : '0 / 0';
+  $('previous').disabled = $('sections').disabled || index === 0;
+  $('next').disabled = $('sections').disabled || index >= count - 1;
+}
+function goToPage(index) {
+  if ($('sections').disabled || !loadedSections.length) return;
+  index = Math.max(0, Math.min(loadedSections.length - 1, index));
+  pause(`Paused at ${$('sections').options[index].text}. Press Start to continue.`);
+  viewport.scrollTop += loadedSections[index].getBoundingClientRect().top - viewport.getBoundingClientRect().top - viewport.clientHeight * .15;
+  updateNavigation(index);
+}
+function restart() { pause('Paused at the beginning.'); viewport.scrollTop = 0; updateNavigation(0); }
+function beginLoad() {
+  pause('Loading talk…');
+  $('play').disabled = $('restart').disabled = $('sections').disabled = true;
+  $('previous').disabled = $('next').disabled = true;
+  return ++generation;
+}
+function display(entries, token) {
+  if (token !== generation) return;
+  entries.sort((a, b) => {
+    const rank = name => /^intro\.md$/i.test(name) ? -1 : /^p(\d+)\.md$/i.test(name) ? Number(name.match(/\d+/)[0]) : Infinity;
+    return rank(a.name) - rank(b.name) || a.name.localeCompare(b.name, undefined, { numeric: true });
+  });
+  $('script').replaceChildren();
+  $('sections').replaceChildren();
+  loadedSections = entries.map(({ name, text }, index) => {
+    const section = document.createElement('section');
+    const label = document.createElement('h2');
+    label.className = 'section-label';
+    label.textContent = `Page ${index + 1} of ${entries.length} — ${name.replace(/\.md$/i, '')}`;
+    section.append(label);
+    const content = document.createElement('div');
+    content.innerHTML = markdown(text);
+    section.append(content);
+    $('script').append(section);
+    $('sections').add(new Option(label.textContent, String(index)));
+    return section;
+  });
+  viewport.scrollTop = 0;
+  $('play').disabled = $('restart').disabled = $('sections').disabled = !entries.length;
+  updateNavigation(0);
+  $('status').textContent = `${entries.length} pages loaded into one continuous talk. Press Start or use Previous / Next page.`;
+}
+function failed(error, token) {
+  if (token === generation) $('status').textContent = `Could not load the complete talk: ${error.message}. Select all .md files from Talk using the file picker above.`;
+}
+$('play').onclick = toggle;
+$('restart').onclick = restart;
+$('slower').onclick = () => speed(-5);
+$('faster').onclick = () => speed(5);
+$('speed').oninput = () => speed();
+$('size').oninput = () => { pause('Paused after changing text size.'); $('script').style.fontSize = `${$('size').value}px`; };
+$('sections').onchange = () => goToPage(Number($('sections').value));
+$('previous').onclick = () => goToPage(currentPage() - 1);
+$('next').onclick = () => goToPage(currentPage() + 1);
+viewport.addEventListener('scroll', () => updateNavigation(), { passive: true });
+viewport.addEventListener('wheel', () => pause('Paused for manual scrolling.'), { passive: true });
+viewport.addEventListener('touchstart', () => pause('Paused for manual scrolling.'), { passive: true });
+viewport.addEventListener('pointerdown', () => pause('Paused for manual scrolling.'));
+document.addEventListener('visibilitychange', () => { if (document.hidden) pause('Paused while the tab was hidden.'); });
+document.addEventListener('keydown', event => {
+  if (event.target.closest('input, select, button') || event.ctrlKey || event.altKey || event.metaKey) return;
+  if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home'].includes(event.key)) event.preventDefault();
+  if (event.key === ' ') toggle();
+  if (event.key === 'ArrowUp') speed(5);
+  if (event.key === 'ArrowDown') speed(-5);
+  if (event.key === 'Home') restart();
+  if (event.key === 'ArrowLeft') goToPage(currentPage() - 1);
+  if (event.key === 'ArrowRight') goToPage(currentPage() + 1);
+});
+$('fullscreen').onclick = async () => {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await document.documentElement.requestFullscreen();
+  } catch { $('status').textContent = 'Full screen is unavailable. You can use your browser’s full-screen command.'; }
+};
+document.addEventListener('fullscreenchange', () => { $('fullscreen').textContent = document.fullscreenElement ? 'Exit full screen' : 'Full screen'; });
+$('files').onchange = async event => {
+  const files = [...event.target.files].filter(file => /\.md$/i.test(file.name));
+  if (!files.length) return;
+  const token = beginLoad();
+  try { display(await Promise.all(files.map(async file => ({ name: file.name, text: await file.text() }))), token); }
+  catch (error) { failed(error, token); }
+};
+async function load() {
+  if (location.protocol === 'file:') {
+    $('status').textContent = 'Select all .md files inside presentation/Talk above. They stay on this laptop; nothing is uploaded.';
+    return;
+  }
+  const token = beginLoad();
+  try {
+    const entries = await Promise.all(talkFiles.map(async name => {
+      const response = await fetch(`Talk/${encodeURIComponent(name)}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`${name} (HTTP ${response.status})`);
+      return { name, text: await response.text() };
+    }));
+    display(entries, token);
+  } catch (error) { failed(error, token); }
+}
+load();
+</script>
+</body>
+</html>
