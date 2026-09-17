@@ -1094,12 +1094,13 @@ slides.push(`
 <h2>Many work items, moving in parallel</h2>
 <div class="cols">
   <ul class="pt">
+    <li>The backlog grid isn't self-populating &mdash; a human + AI pair writes the contracts that fill it.</li>
     <li>The single-item pipeline, replicated across many work items at once.</li>
     <li>Parallelism is what actually clears a backlog.</li>
     <li>Governance doesn't change yet &mdash; that's still ahead.</li>
   </ul>
   <figure class="shot">
-    <img src="images/panel-4-parallel.png" alt="Multiple work items moving through parallel specialized pipelines simultaneously.">
+    <img src="images/panel-4-parallel.svg" alt="A human and AI pair writing contracts that populate a backlog grid, which feeds four parallel pipelines of specialized stations flowing toward integration.">
     <figcaption>4. Many Work Items in Parallel (Scale Out)</figcaption>
   </figure>
 </div>
@@ -1236,18 +1237,20 @@ and final human acceptance.</div>
 slides.push(`
 <div class="kicker blue">the reframe</div>
 <h2>Adapt the discipline one level up</h2>
-<p class="lede">We use the routine/caller relationship as a model for the human/agent relationship:
-explicit expectations, verifiable results, and clear responsibility.</p>
-<div class="term" style="max-width:70ch;">
-  <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
-    <span class="term-path">CLAUDE.md &mdash; foundational rules</span></div>
-  <div class="term-body"><span class="n">1.</span> Understand and design meaningful changes before implementing them.
+<div class="cols">
+  <p class="lede">We use the routine/caller relationship as a model for the human/agent relationship:
+  explicit expectations, verifiable results, and clear responsibility.</p>
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">CLAUDE.md &mdash; foundational rules</span></div>
+    <div class="term-body"><span class="n">1.</span> Understand and design meaningful changes before implementing them.
 <span class="n">2.</span> Do not begin implementation without an approved task.
 <span class="n">3.</span> Implement approved behavior without silently expanding scope.
 <span class="n">4.</span> Escalate material ambiguity to the human.
 <span class="n">5.</span> Keep lasting knowledge in the repository, not chat history.
 <span class="n">6.</span> Independent review is distinct from implementation.
 <span class="n">7.</span> Do not continue beyond the responsibility assigned to your role.</div>
+  </div>
 </div>
 `);
 
@@ -1369,19 +1372,25 @@ Approved by: &middot; Approved date: &middot; Related tasks:
 slides.push(`
 <div class="kicker blue">real example &mdash; from a production repo</div>
 <h2>CONTRACT-007: REST validation, MeshtasticForeman</h2>
-<p class="lede" style="margin-bottom:1rem;">A task to add Zod validation across REST routes flagged its own biggest risk:
-tightening validation could reject input that silently "succeeds" today. The contract didn't guess &mdash; it enumerated.</p>
-<div class="term">
-  <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
-    <span class="term-path">docs/contracts/CONTRACT-007 &mdash; Open questions #1</span></div>
-  <div class="term-body"><span class="bad">since=banana</span> today &rarr; silently means <span class="c">"no time filter"</span>
-                 (query just gets wider than intended)
+<div class="cols">
+  <p class="lede">A task to add Zod validation across REST routes flagged its own biggest risk:
+  tightening validation could reject input that silently "succeeds" today. The contract didn't guess &mdash; it enumerated.</p>
+  <div class="term">
+    <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-path">CONTRACT-007 &mdash; Q1</span></div>
+    <div class="term-body"><span class="bad">since=banana</span> today &rarr;
+<span class="c">"no time filter"</span>
+(query gets wider
+than intended)
 
-/api/traceroutes already <span class="good">rejects</span> the same input with <span class="n">400</span>
+/api/traceroutes
+already <span class="good">rejects</span> the
+same input, <span class="n">400</span>
 
-<span class="c">// one shared "since" schema must pick ONE behavior.</span>
-<span class="c">// recommendation given &mdash; but the human decides,</span>
-<span class="c">// because this silently changes 11 endpoints' behavior.</span></div>
+<span class="c">// one shared schema,</span>
+<span class="c">// ONE behavior. human</span>
+<span class="c">// decides &mdash; it changes</span>
+<span class="c">// 11 endpoints at once.</span></div>
   </div>
 </div>
 `);

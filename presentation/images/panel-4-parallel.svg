@@ -1,0 +1,154 @@
+<svg viewBox="0 0 1160 380" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="A human and AI pair writing contracts that populate a backlog grid, which feeds four parallel pipelines of specialized stations flowing toward integration.">
+  <defs>
+    <marker id="p4-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5c5b63"/>
+    </marker>
+    <symbol id="p4-ico-robot" viewBox="0 0 40 40">
+      <rect x="8" y="12" width="24" height="18" rx="5" fill="#ffffff"/>
+      <rect x="17" y="4" width="6" height="8" rx="2" fill="#ffffff"/>
+      <circle cx="15" cy="20" r="2.6" fill="#1e293b"/>
+      <circle cx="25" cy="20" r="2.6" fill="#1e293b"/>
+    </symbol>
+    <symbol id="p4-ico-ring" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="11" fill="none" stroke="#ffffff" stroke-width="5"/>
+    </symbol>
+    <symbol id="p4-ico-server" viewBox="0 0 40 40">
+      <rect x="9" y="10" width="22" height="7" rx="2" fill="#ffffff"/>
+      <rect x="9" y="20" width="22" height="7" rx="2" fill="#ffffff"/>
+      <circle cx="14" cy="13.5" r="1.6" fill="#1e293b"/>
+      <circle cx="14" cy="23.5" r="1.6" fill="#1e293b"/>
+    </symbol>
+    <symbol id="p4-ico-person" viewBox="0 0 40 40">
+      <circle cx="20" cy="13" r="8" fill="#f0c28a"/>
+      <path d="M6,36 C6,24 34,24 34,36 Z" fill="#4f8fdb"/>
+    </symbol>
+    <symbol id="p4-ico-robot-light" viewBox="0 0 40 40">
+      <rect x="8" y="12" width="24" height="18" rx="5" fill="#3fae7a"/>
+      <rect x="17" y="4" width="6" height="8" rx="2" fill="#3fae7a"/>
+      <circle cx="15" cy="20" r="2.6" fill="#ffffff"/>
+      <circle cx="25" cy="20" r="2.6" fill="#ffffff"/>
+    </symbol>
+    <g id="p4-lane-row">
+      <rect x="398" y="-21" width="64" height="42" rx="8" fill="#5a67d8"/>
+      <use href="#p4-ico-robot" x="411" y="-19" width="38" height="38"/>
+      <rect x="478" y="-21" width="64" height="42" rx="8" fill="#10a37f"/>
+      <use href="#p4-ico-ring" x="491" y="-19" width="38" height="38"/>
+      <rect x="558" y="-21" width="64" height="42" rx="8" fill="#6b7280"/>
+      <use href="#p4-ico-robot" x="571" y="-19" width="38" height="38"/>
+      <rect x="638" y="-21" width="64" height="42" rx="8" fill="#374151"/>
+      <use href="#p4-ico-server" x="651" y="-19" width="38" height="38"/>
+      <rect x="718" y="-21" width="64" height="42" rx="8" fill="#10a37f"/>
+      <use href="#p4-ico-ring" x="731" y="-19" width="38" height="38"/>
+      <rect x="798" y="-21" width="64" height="42" rx="8" fill="#eef0f6" stroke="#c7c9d9" stroke-width="1.5"/>
+      <use href="#p4-ico-person" x="811" y="-19" width="38" height="38"/>
+      <rect x="398" y="24" width="464" height="6" rx="3" fill="#c9c9d1"/>
+    </g>
+  </defs>
+
+  <rect x="3" y="3" width="1154" height="374" rx="14" fill="#ffffff" stroke="#d7d7de" stroke-width="1.5"/>
+
+  <text x="24" y="30" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#1a1a2e">4. Many Work Items in Parallel (Scale Out)</text>
+  <text x="24" y="50" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#5c5b63">Multiple work items move through parallel pipelines &#8212; sourced from contracts a human + AI pair write.</text>
+
+  <!-- pair writing contracts -->
+  <rect x="20" y="130" width="100" height="110" rx="10" fill="#f5f4fb" stroke="#8a6fc7" stroke-width="1.5"/>
+  <use href="#p4-ico-person" x="30" y="149" width="36" height="36"/>
+  <text x="68" y="172" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#5c5b63" text-anchor="middle">+</text>
+  <use href="#p4-ico-robot-light" x="74" y="149" width="36" height="36"/>
+  <text x="70" y="207" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a1a2e" text-anchor="middle">human + AI</text>
+  <text x="70" y="222" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#5c5b63" text-anchor="middle">write the contracts</text>
+  <line x1="121" y1="185" x2="147" y2="185" stroke="#8a6fc7" stroke-width="2" marker-end="url(#p4-arrow)"/>
+
+  <!-- backlog grid -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#5c5b63">
+    <text x="160" y="74" text-anchor="middle">1</text>
+    <text x="180" y="74" text-anchor="middle">2</text>
+    <text x="200" y="74" text-anchor="middle">3</text>
+    <text x="220" y="74" text-anchor="middle">4</text>
+    <text x="240" y="74" text-anchor="middle">5</text>
+    <text x="260" y="74" text-anchor="middle">6</text>
+    <text x="280" y="74" text-anchor="middle">7</text>
+    <text x="300" y="74" text-anchor="middle">8</text>
+    <text x="320" y="74" text-anchor="middle">9</text>
+    <text x="142" y="94" text-anchor="end">A</text>
+    <text x="142" y="114" text-anchor="end">B</text>
+    <text x="142" y="134" text-anchor="end">C</text>
+    <text x="142" y="154" text-anchor="end">D</text>
+    <text x="142" y="174" text-anchor="end">E</text>
+    <text x="142" y="194" text-anchor="end">F</text>
+    <text x="142" y="214" text-anchor="end">G</text>
+    <text x="142" y="234" text-anchor="end">H</text>
+    <text x="142" y="254" text-anchor="end">I</text>
+  </g>
+  <path d="M150,80 L150,260 M170,80 L170,260 M190,80 L190,260 M210,80 L210,260 M230,80 L230,260
+           M250,80 L250,260 M270,80 L270,260 M290,80 L290,260 M310,80 L310,260 M330,80 L330,260
+           M150,80 L330,80 M150,100 L330,100 M150,120 L330,120 M150,140 L330,140 M150,160 L330,160
+           M150,180 L330,180 M150,200 L330,200 M150,220 L330,220 M150,240 L330,240 M150,260 L330,260"
+        stroke="#5c5b63" stroke-width="1" fill="none"/>
+  <g>
+    <rect x="172" y="82" width="16" height="16" rx="2" fill="#4f8fdb"/>
+    <rect x="212" y="102" width="16" height="16" rx="2" fill="#e0a83e"/>
+    <rect x="272" y="102" width="16" height="16" rx="2" fill="#4f9e5a"/>
+    <rect x="192" y="122" width="16" height="16" rx="2" fill="#e0a83e"/>
+    <rect x="252" y="142" width="16" height="16" rx="2" fill="#8a6fc7"/>
+    <rect x="152" y="162" width="16" height="16" rx="2" fill="#4f8fdb"/>
+    <rect x="272" y="162" width="16" height="16" rx="2" fill="#e0a83e"/>
+    <rect x="212" y="182" width="16" height="16" rx="2" fill="#4f8fdb"/>
+    <rect x="172" y="202" width="16" height="16" rx="2" fill="#8a6fc7"/>
+    <rect x="292" y="202" width="16" height="16" rx="2" fill="#4f9e5a"/>
+    <rect x="232" y="222" width="16" height="16" rx="2" fill="#e0a83e"/>
+    <rect x="192" y="242" width="16" height="16" rx="2" fill="#4f8fdb"/>
+  </g>
+  <text x="240" y="272" font-family="Arial, Helvetica, sans-serif" font-size="11" font-style="italic" fill="#5c5b63" text-anchor="middle">backlog grid</text>
+
+  <!-- grid to lane connectors -->
+  <line x1="330" y1="120" x2="396" y2="100" stroke="#4f8fdb" stroke-width="2" marker-end="url(#p4-arrow)"/>
+  <line x1="330" y1="160" x2="396" y2="170" stroke="#e0a83e" stroke-width="2" marker-end="url(#p4-arrow)"/>
+  <line x1="330" y1="200" x2="396" y2="240" stroke="#8a6fc7" stroke-width="2" marker-end="url(#p4-arrow)"/>
+  <line x1="330" y1="240" x2="396" y2="310" stroke="#4f9e5a" stroke-width="2" marker-end="url(#p4-arrow)"/>
+
+  <!-- four parallel lanes -->
+  <g transform="translate(0,100)">
+    <use href="#p4-lane-row"/>
+    <line x1="864" y1="0" x2="878" y2="0" stroke="#5c5b63" stroke-width="2" marker-end="url(#p4-arrow)"/>
+    <rect x="880" y="-10" width="20" height="20" rx="3" fill="#4f8fdb"/>
+    <line x1="902" y1="0" x2="948" y2="0" stroke="#5c5b63" stroke-width="2" marker-end="url(#p4-arrow)"/>
+  </g>
+  <g transform="translate(0,170)">
+    <use href="#p4-lane-row"/>
+    <line x1="864" y1="0" x2="878" y2="0" stroke="#5c5b63" stroke-width="2" marker-end="url(#p4-arrow)"/>
+    <rect x="880" y="-10" width="20" height="20" rx="3" fill="#e0a83e"/>
+    <line x1="902" y1="0" x2="948" y2="0" stroke="#5c5b63" stroke-width="2" marker-end="url(#p4-arrow)"/>
+  </g>
+  <g transform="translate(0,240)">
+    <use href="#p4-lane-row"/>
+    <line x1="864" y1="0" x2="878" y2="0" stroke="#5c5b63" stroke-width="2" marker-end="url(#p4-arrow)"/>
+    <rect x="880" y="-10" width="20" height="20" rx="3" fill="#8a6fc7"/>
+    <line x1="902" y1="0" x2="948" y2="0" stroke="#5c5b63" stroke-width="2" marker-end="url(#p4-arrow)"/>
+    <text x="958" y="-4" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#5c5b63">To</text>
+    <text x="958" y="10" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#5c5b63">Integration</text>
+  </g>
+  <g transform="translate(0,310)">
+    <use href="#p4-lane-row"/>
+    <line x1="864" y1="0" x2="878" y2="0" stroke="#5c5b63" stroke-width="2" marker-end="url(#p4-arrow)"/>
+    <rect x="880" y="-10" width="20" height="20" rx="3" fill="#4f9e5a"/>
+    <line x1="902" y1="0" x2="948" y2="0" stroke="#5c5b63" stroke-width="2" marker-end="url(#p4-arrow)"/>
+  </g>
+
+  <!-- station labels (shared across lanes) -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#3d3d45" text-anchor="middle">
+    <text x="430" y="347">Codex</text>
+    <text x="430" y="360">(Coding)</text>
+    <text x="510" y="347">ChatGPT</text>
+    <text x="510" y="360">(Analysis)</text>
+    <text x="590" y="347">Copilot</text>
+    <text x="590" y="360">(Tests)</text>
+    <text x="670" y="347">Automated</text>
+    <text x="670" y="360">Runner</text>
+    <text x="750" y="347">ChatGPT</text>
+    <text x="750" y="360">(Spec Check)</text>
+    <text x="830" y="347">Human</text>
+    <text x="830" y="360">QA</text>
+  </g>
+</svg>
