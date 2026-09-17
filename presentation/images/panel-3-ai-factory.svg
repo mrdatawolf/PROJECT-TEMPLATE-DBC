@@ -1,0 +1,106 @@
+<svg viewBox="0 0 1160 300" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="A single work item moving through eight specialized stations on one conveyor belt, each staffed by a different tool or person instead of one generalist.">
+  <defs>
+    <marker id="p3-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5c5b63"/>
+    </marker>
+    <symbol id="p3-ico-doc" viewBox="0 0 40 40">
+      <rect x="10" y="5" width="20" height="30" rx="3" fill="none" stroke="#1a1a2e" stroke-width="2"/>
+      <line x1="14" y1="14" x2="26" y2="14" stroke="#1a1a2e" stroke-width="2"/>
+      <line x1="14" y1="20" x2="26" y2="20" stroke="#1a1a2e" stroke-width="2"/>
+      <line x1="14" y1="26" x2="22" y2="26" stroke="#1a1a2e" stroke-width="2"/>
+    </symbol>
+    <symbol id="p3-ico-robot" viewBox="0 0 40 40">
+      <rect x="8" y="12" width="24" height="18" rx="5" fill="#ffffff"/>
+      <rect x="17" y="4" width="6" height="8" rx="2" fill="#ffffff"/>
+      <circle cx="15" cy="20" r="2.6" fill="#1e293b"/>
+      <circle cx="25" cy="20" r="2.6" fill="#1e293b"/>
+    </symbol>
+    <symbol id="p3-ico-ring" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="11" fill="none" stroke="#ffffff" stroke-width="5"/>
+    </symbol>
+    <symbol id="p3-ico-server" viewBox="0 0 40 40">
+      <rect x="9" y="10" width="22" height="7" rx="2" fill="#ffffff"/>
+      <rect x="9" y="20" width="22" height="7" rx="2" fill="#ffffff"/>
+      <circle cx="14" cy="13.5" r="1.6" fill="#1e293b"/>
+      <circle cx="14" cy="23.5" r="1.6" fill="#1e293b"/>
+    </symbol>
+    <symbol id="p3-ico-person" viewBox="0 0 40 40">
+      <circle cx="20" cy="13" r="8" fill="#f0c28a"/>
+      <path d="M6,36 C6,24 34,24 34,36 Z" fill="#4f8fdb"/>
+    </symbol>
+    <symbol id="p3-ico-puzzle" viewBox="0 0 40 40">
+      <path d="M14,7h6a2.6,2.6 0 0 1 0,5 2.6,2.6 0 0 0 0,5h6v6a2.6,2.6 0 0 1-5,0 2.6,2.6 0 0 0-5,0v6H10a2.6,2.6 0 0 1 0-5 2.6,2.6 0 0 0 0-5H4V13a2.6,2.6 0 0 1 5,0 2.6,2.6 0 0 0 5,0V7z" fill="none" stroke="#1a1a2e" stroke-width="2" stroke-linejoin="round"/>
+    </symbol>  </defs>
+
+  <rect x="3" y="3" width="1154" height="294" rx="14" fill="#ffffff" stroke="#d7d7de" stroke-width="1.5"/>
+
+  <text x="24" y="30" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#1a1a2e">3. Specialize the Steps, Not Just the Person</text>
+  <text x="24" y="50" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#5c5b63">Each station is staffed by whichever tool or person is best at that one job.</text>
+
+  <rect x="72" y="172" width="18" height="18" rx="3" fill="#4f8fdb"/>
+  <line x1="92" y1="181" x2="98" y2="181" stroke="#5c5b63" stroke-width="2" marker-end="url(#p3-arrow)"/>
+
+  <rect x="96" y="178" width="1000" height="14" rx="7" fill="#4b5563"/>
+  <circle cx="104" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="104" cy="191" r="1.8" fill="#4b4b55"/><circle cx="136" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="136" cy="191" r="1.8" fill="#4b4b55"/><circle cx="168" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="168" cy="191" r="1.8" fill="#4b4b55"/><circle cx="200" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="200" cy="191" r="1.8" fill="#4b4b55"/><circle cx="232" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="232" cy="191" r="1.8" fill="#4b4b55"/><circle cx="264" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="264" cy="191" r="1.8" fill="#4b4b55"/><circle cx="296" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="296" cy="191" r="1.8" fill="#4b4b55"/><circle cx="328" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="328" cy="191" r="1.8" fill="#4b4b55"/><circle cx="360" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="360" cy="191" r="1.8" fill="#4b4b55"/><circle cx="392" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="392" cy="191" r="1.8" fill="#4b4b55"/><circle cx="424" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="424" cy="191" r="1.8" fill="#4b4b55"/><circle cx="456" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="456" cy="191" r="1.8" fill="#4b4b55"/><circle cx="488" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="488" cy="191" r="1.8" fill="#4b4b55"/><circle cx="520" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="520" cy="191" r="1.8" fill="#4b4b55"/><circle cx="552" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="552" cy="191" r="1.8" fill="#4b4b55"/><circle cx="584" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="584" cy="191" r="1.8" fill="#4b4b55"/><circle cx="616" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="616" cy="191" r="1.8" fill="#4b4b55"/><circle cx="648" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="648" cy="191" r="1.8" fill="#4b4b55"/><circle cx="680" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="680" cy="191" r="1.8" fill="#4b4b55"/><circle cx="712" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="712" cy="191" r="1.8" fill="#4b4b55"/><circle cx="744" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="744" cy="191" r="1.8" fill="#4b4b55"/><circle cx="776" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="776" cy="191" r="1.8" fill="#4b4b55"/><circle cx="808" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="808" cy="191" r="1.8" fill="#4b4b55"/><circle cx="840" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="840" cy="191" r="1.8" fill="#4b4b55"/><circle cx="872" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="872" cy="191" r="1.8" fill="#4b4b55"/><circle cx="904" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="904" cy="191" r="1.8" fill="#4b4b55"/><circle cx="936" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="936" cy="191" r="1.8" fill="#4b4b55"/><circle cx="968" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="968" cy="191" r="1.8" fill="#4b4b55"/><circle cx="1000" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="1000" cy="191" r="1.8" fill="#4b4b55"/><circle cx="1032" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="1032" cy="191" r="1.8" fill="#4b4b55"/><circle cx="1064" cy="191" r="5.5" fill="#ffffff" stroke="#4b4b55" stroke-width="1.3"/><circle cx="1064" cy="191" r="1.8" fill="#4b4b55"/>
+
+  <line x1="1098" y1="181" x2="1120" y2="181" stroke="#5c5b63" stroke-width="2" marker-end="url(#p3-arrow)"/>
+  <rect x="1122" y="172" width="18" height="18" rx="3" fill="#4f9e5a"/>
+
+  <text x="158.5" y="74" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a1a2e" text-anchor="middle">1</text>
+  <text x="158.5" y="88" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#5c5b63" text-anchor="middle"><tspan x="158.5" dy="0">Design</tspan><tspan x="158.5" dy="12">Spec</tspan></text>
+  <rect x="126.5" y="118" width="64" height="46" rx="8" fill="#eef0f6" stroke="#c7c9d9" stroke-width="1.5"/>
+  <use href="#p3-ico-doc" x="139.5" y="122" width="38" height="38"/>
+  <text x="158.5" y="212" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">Human + AI</text>
+  <text x="158.5" y="225" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">Architect</text>
+
+  <text x="283.5" y="74" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a1a2e" text-anchor="middle">2</text>
+  <text x="283.5" y="88" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#5c5b63" text-anchor="middle"><tspan x="283.5" dy="0">Coding</tspan><tspan x="283.5" dy="12">(Codex)</tspan></text>
+  <rect x="251.5" y="118" width="64" height="46" rx="8" fill="#5a67d8"/>
+  <use href="#p3-ico-robot" x="264.5" y="122" width="38" height="38"/>
+  <text x="283.5" y="212" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">Codex</text>
+  <text x="283.5" y="225" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">(LLM)</text>
+
+  <text x="408.5" y="74" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a1a2e" text-anchor="middle">3</text>
+  <text x="408.5" y="88" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#5c5b63" text-anchor="middle"><tspan x="408.5" dy="0">Static Analysis</tspan><tspan x="408.5" dy="12">(ChatGPT)</tspan></text>
+  <rect x="376.5" y="118" width="64" height="46" rx="8" fill="#10a37f"/>
+  <use href="#p3-ico-ring" x="389.5" y="122" width="38" height="38"/>
+  <text x="408.5" y="212" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">ChatGPT</text>
+  <text x="408.5" y="225" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">(LLM)</text>
+
+  <text x="533.5" y="74" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a1a2e" text-anchor="middle">4</text>
+  <text x="533.5" y="88" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#5c5b63" text-anchor="middle"><tspan x="533.5" dy="0">Unit Test</tspan><tspan x="533.5" dy="12">Generation (Copilot)</tspan></text>
+  <rect x="501.5" y="118" width="64" height="46" rx="8" fill="#6b7280"/>
+  <use href="#p3-ico-robot" x="514.5" y="122" width="38" height="38"/>
+  <text x="533.5" y="212" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">Copilot</text>
+  <text x="533.5" y="225" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">(LLM)</text>
+
+  <text x="658.5" y="74" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a1a2e" text-anchor="middle">5</text>
+  <text x="658.5" y="88" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#5c5b63" text-anchor="middle"><tspan x="658.5" dy="0">Test Execution</tspan><tspan x="658.5" dy="12">(Automated)</tspan></text>
+  <rect x="626.5" y="118" width="64" height="46" rx="8" fill="#374151"/>
+  <use href="#p3-ico-server" x="639.5" y="122" width="38" height="38"/>
+  <text x="658.5" y="212" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">Automated</text>
+  <text x="658.5" y="225" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">Test Runner</text>
+
+  <text x="783.5" y="74" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a1a2e" text-anchor="middle">6</text>
+  <text x="783.5" y="88" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#5c5b63" text-anchor="middle"><tspan x="783.5" dy="0">Spec Conformance</tspan><tspan x="783.5" dy="12">Review (ChatGPT)</tspan></text>
+  <rect x="751.5" y="118" width="64" height="46" rx="8" fill="#10a37f"/>
+  <use href="#p3-ico-ring" x="764.5" y="122" width="38" height="38"/>
+  <text x="783.5" y="212" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">ChatGPT</text>
+  <text x="783.5" y="225" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">(LLM)</text>
+
+  <text x="908.5" y="74" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a1a2e" text-anchor="middle">7</text>
+  <text x="908.5" y="88" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#5c5b63" text-anchor="middle"><tspan x="908.5" dy="0">Final QA</tspan><tspan x="908.5" dy="12">(Human)</tspan></text>
+  <rect x="876.5" y="118" width="64" height="46" rx="8" fill="#eef0f6" stroke="#c7c9d9" stroke-width="1.5"/>
+  <use href="#p3-ico-person" x="889.5" y="122" width="38" height="38"/>
+  <text x="908.5" y="212" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">Human</text>
+  <text x="908.5" y="225" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">QA Engineer</text>
+
+  <text x="1033.5" y="74" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" fill="#1a1a2e" text-anchor="middle">8</text>
+  <text x="1033.5" y="88" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#5c5b63" text-anchor="middle"><tspan x="1033.5" dy="0">Integration</tspan></text>
+  <rect x="1001.5" y="118" width="64" height="46" rx="8" fill="#eef0f6" stroke="#c7c9d9" stroke-width="1.5"/>
+  <use href="#p3-ico-puzzle" x="1014.5" y="122" width="38" height="38"/>
+  <text x="1033.5" y="212" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">Integration</text>
+  <text x="1033.5" y="225" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#3d3d45" text-anchor="middle">System</text>
+
+</svg>

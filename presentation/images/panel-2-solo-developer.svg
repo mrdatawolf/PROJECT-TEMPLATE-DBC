@@ -1,0 +1,161 @@
+<svg viewBox="0 0 1460 375" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="A single work item moving through seven pipeline stations, with the same solo developer -- drawn losing progressively more hair -- performing every station from design review through integration.">
+  <defs>
+    <marker id="p2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4f8fdb"/>
+    </marker>
+    <clipPath id="p2-head-clip">
+      <circle cx="20" cy="13" r="8"/>
+    </clipPath>
+    <symbol id="p2-person-1" viewBox="0 0 40 40">
+      <path d="M6,36 C6,24 34,24 34,36 Z" fill="#4f8fdb"/>
+      <circle cx="20" cy="13" r="8" fill="#f0c28a"/>
+      <rect x="10" y="3" width="20" height="14" fill="#5b3d2b" clip-path="url(#p2-head-clip)"/>
+    </symbol>
+    <symbol id="p2-person-2" viewBox="0 0 40 40">
+      <path d="M6,36 C6,24 34,24 34,36 Z" fill="#4f8fdb"/>
+      <circle cx="20" cy="13" r="8" fill="#f0c28a"/>
+      <rect x="10" y="3" width="20" height="12" fill="#5b3d2b" clip-path="url(#p2-head-clip)"/>
+    </symbol>
+    <symbol id="p2-person-3" viewBox="0 0 40 40">
+      <path d="M6,36 C6,24 34,24 34,36 Z" fill="#4f8fdb"/>
+      <circle cx="20" cy="13" r="8" fill="#f0c28a"/>
+      <rect x="10" y="3" width="20" height="10" fill="#5b3d2b" clip-path="url(#p2-head-clip)"/>
+    </symbol>
+    <symbol id="p2-person-4" viewBox="0 0 40 40">
+      <path d="M6,36 C6,24 34,24 34,36 Z" fill="#4f8fdb"/>
+      <circle cx="20" cy="13" r="8" fill="#f0c28a"/>
+      <rect x="10" y="3" width="20" height="8.5" fill="#5b3d2b" clip-path="url(#p2-head-clip)"/><circle cx="14" cy="8" r="2.1" fill="#f0c28a" clip-path="url(#p2-head-clip)"/><circle cx="26" cy="8" r="2.1" fill="#f0c28a" clip-path="url(#p2-head-clip)"/>
+    </symbol>
+    <symbol id="p2-person-5" viewBox="0 0 40 40">
+      <path d="M6,36 C6,24 34,24 34,36 Z" fill="#4f8fdb"/>
+      <circle cx="20" cy="13" r="8" fill="#f0c28a"/>
+      <ellipse cx="20" cy="7" rx="6" ry="3.6" fill="#5b3d2b" clip-path="url(#p2-head-clip)"/>
+    </symbol>
+    <symbol id="p2-person-6" viewBox="0 0 40 40">
+      <path d="M6,36 C6,24 34,24 34,36 Z" fill="#4f8fdb"/>
+      <circle cx="20" cy="13" r="8" fill="#f0c28a"/>
+      <ellipse cx="20" cy="6.3" rx="3" ry="2" fill="#5b3d2b" clip-path="url(#p2-head-clip)"/>
+    </symbol>
+    <symbol id="p2-person-7" viewBox="0 0 40 40">
+      <path d="M6,36 C6,24 34,24 34,36 Z" fill="#4f8fdb"/>
+      <circle cx="20" cy="13" r="8" fill="#f0c28a"/>
+      <ellipse cx="17" cy="8.5" rx="2.4" ry="1.4" fill="#ffffff" opacity="0.55"/>
+    </symbol>
+    <symbol id="p2-ico-design" viewBox="0 0 24 24">
+      <rect x="5" y="2.5" width="14" height="19" rx="2"/>
+      <line x1="8" y1="8" x2="16" y2="8"/>
+      <line x1="8" y1="12" x2="16" y2="12"/>
+      <line x1="8" y1="16" x2="13" y2="16"/>
+    </symbol>
+    <symbol id="p2-ico-code" viewBox="0 0 24 24">
+      <path d="M9 6L4 12l5 6"/>
+      <path d="M15 6l5 6-5 6"/>
+    </symbol>
+    <symbol id="p2-ico-tests" viewBox="0 0 24 24">
+      <rect x="4" y="4" width="3.6" height="3.6" rx="0.8"/>
+      <line x1="10.5" y1="5.8" x2="20" y2="5.8"/>
+      <rect x="4" y="10.2" width="3.6" height="3.6" rx="0.8"/>
+      <line x1="10.5" y1="12" x2="20" y2="12"/>
+      <rect x="4" y="16.4" width="3.6" height="3.6" rx="0.8"/>
+      <line x1="10.5" y1="18.2" x2="20" y2="18.2"/>
+    </symbol>
+    <symbol id="p2-ico-exec" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.5"/>
+      <path d="M10 9l5.5 3-5.5 3z" fill="#ffffff" stroke="none"/>
+    </symbol>
+    <symbol id="p2-ico-qa" viewBox="0 0 24 24">
+      <circle cx="10.5" cy="10.5" r="6"/>
+      <line x1="15" y1="15" x2="20" y2="20"/>
+    </symbol>
+    <symbol id="p2-ico-integration" viewBox="0 0 24 24">
+      <path d="M9 4h4a1.5 1.5 0 0 1 0 3 1.5 1.5 0 0 0 0 3h4v4a1.5 1.5 0 0 1-3 0 1.5 1.5 0 0 0-3 0v4H7a1.5 1.5 0 0 1 0-3 1.5 1.5 0 0 0 0-3H4V8a1.5 1.5 0 0 1 3 0 1.5 1.5 0 0 0 3 0V4z"/>
+    </symbol>
+  </defs>
+
+  <rect x="3" y="3" width="1454" height="369" rx="14" fill="#ffffff" stroke="#d7d7de" stroke-width="1.5"/>
+
+  <text x="24" y="32" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#1a1a2e">2. Traditional Solo Developer (One Person Does Everything)</text>
+  <text x="24" y="52" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#5c5b63">One work item flows through all seven steps, handled by the same developer every time.</text>
+
+  <!-- backlog grid -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#5c5b63">
+    <text x="74.0" y="104" text-anchor="middle">1</text><text x="94.0" y="104" text-anchor="middle">2</text><text x="114.0" y="104" text-anchor="middle">3</text><text x="134.0" y="104" text-anchor="middle">4</text><text x="154.0" y="104" text-anchor="middle">5</text><text x="174.0" y="104" text-anchor="middle">6</text><text x="194.0" y="104" text-anchor="middle">7</text><text x="214.0" y="104" text-anchor="middle">8</text><text x="234.0" y="104" text-anchor="middle">9</text>
+    <text x="56" y="124" text-anchor="end">A</text><text x="56" y="144" text-anchor="end">B</text><text x="56" y="164" text-anchor="end">C</text><text x="56" y="184" text-anchor="end">D</text><text x="56" y="204" text-anchor="end">E</text><text x="56" y="224" text-anchor="end">F</text><text x="56" y="244" text-anchor="end">G</text><text x="56" y="264" text-anchor="end">H</text><text x="56" y="284" text-anchor="end">I</text>
+  </g>
+  <path d="M64,110 L64,290 M84,110 L84,290 M104,110 L104,290 M124,110 L124,290 M144,110 L144,290 M164,110 L164,290 M184,110 L184,290 M204,110 L204,290 M224,110 L224,290 M244,110 L244,290 M64,110 L244,110 M64,130 L244,130 M64,150 L244,150 M64,170 L244,170 M64,190 L244,190 M64,210 L244,210 M64,230 L244,230 M64,250 L244,250 M64,270 L244,270 M64,290 L244,290" stroke="#5c5b63" stroke-width="1" fill="none"/>
+  <rect x="146" y="192" width="16" height="16" rx="2" fill="#4f8fdb"/>
+  <text x="154.0" y="312" font-family="Arial, Helvetica, sans-serif" font-size="11" font-style="italic" fill="#5c5b63" text-anchor="middle">backlog grid</text>
+
+  <!-- grid to belt -->
+  <line x1="164" y1="200.0" x2="286" y2="307.0" stroke="#4f8fdb" stroke-width="2" marker-end="url(#p2-arrow)"/>
+  <rect x="276" y="294" width="20" height="20" rx="3" fill="#4f8fdb"/>
+
+  <!-- belt -->
+  <rect x="300" y="300" width="1100" height="14" rx="7" fill="#374151"/>
+  <circle cx="310" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="310" cy="313" r="2" fill="#5c5b63"/><circle cx="350" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="350" cy="313" r="2" fill="#5c5b63"/><circle cx="390" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="390" cy="313" r="2" fill="#5c5b63"/><circle cx="430" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="430" cy="313" r="2" fill="#5c5b63"/><circle cx="470" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="470" cy="313" r="2" fill="#5c5b63"/><circle cx="510" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="510" cy="313" r="2" fill="#5c5b63"/><circle cx="550" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="550" cy="313" r="2" fill="#5c5b63"/><circle cx="590" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="590" cy="313" r="2" fill="#5c5b63"/><circle cx="630" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="630" cy="313" r="2" fill="#5c5b63"/><circle cx="670" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="670" cy="313" r="2" fill="#5c5b63"/><circle cx="710" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="710" cy="313" r="2" fill="#5c5b63"/><circle cx="750" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="750" cy="313" r="2" fill="#5c5b63"/><circle cx="790" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="790" cy="313" r="2" fill="#5c5b63"/><circle cx="830" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="830" cy="313" r="2" fill="#5c5b63"/><circle cx="870" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="870" cy="313" r="2" fill="#5c5b63"/><circle cx="910" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="910" cy="313" r="2" fill="#5c5b63"/><circle cx="950" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="950" cy="313" r="2" fill="#5c5b63"/><circle cx="990" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="990" cy="313" r="2" fill="#5c5b63"/><circle cx="1030" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1030" cy="313" r="2" fill="#5c5b63"/><circle cx="1070" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1070" cy="313" r="2" fill="#5c5b63"/><circle cx="1110" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1110" cy="313" r="2" fill="#5c5b63"/><circle cx="1150" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1150" cy="313" r="2" fill="#5c5b63"/><circle cx="1190" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1190" cy="313" r="2" fill="#5c5b63"/><circle cx="1230" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1230" cy="313" r="2" fill="#5c5b63"/><circle cx="1270" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1270" cy="313" r="2" fill="#5c5b63"/><circle cx="1310" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1310" cy="313" r="2" fill="#5c5b63"/><circle cx="1350" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1350" cy="313" r="2" fill="#5c5b63"/><circle cx="1390" cy="313" r="6" fill="#ffffff" stroke="#5c5b63" stroke-width="1.4"/><circle cx="1390" cy="313" r="2" fill="#5c5b63"/>
+
+  <!-- output -->
+  <line x1="1400" y1="307.0" x2="1434" y2="307.0" stroke="#5c5b63" stroke-width="2" marker-end="url(#p2-arrow)"/>
+  <rect x="1436" y="294" width="20" height="20" rx="3" fill="#4f9e5a"/>
+
+  <!-- stations -->
+  <g>
+    <text x="378.57142857142856" y="76" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1a1a2e" text-anchor="middle">1</text>
+    <text x="378.57142857142856" y="96" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#3d3d45" text-anchor="middle"><tspan x="378.57142857142856" dy="0">Design Review</tspan></text>
+    <use href="#p2-person-1" x="351.57142857142856" y="112" width="54" height="54"/>
+    <rect x="356.57142857142856" y="174" width="44" height="44" rx="8" fill="#6b7280"/>
+    <use href="#p2-ico-design" x="364.57142857142856" y="182" width="28" height="28" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="378.57142857142856" y1="218" x2="378.57142857142856" y2="300" stroke="#c9c9d1" stroke-width="2"/>
+  </g>
+  <g>
+    <text x="535.7142857142858" y="76" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1a1a2e" text-anchor="middle">2</text>
+    <text x="535.7142857142858" y="96" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#3d3d45" text-anchor="middle"><tspan x="535.7142857142858" dy="0">Coding</tspan></text>
+    <use href="#p2-person-2" x="508.7142857142858" y="112" width="54" height="54"/>
+    <rect x="513.7142857142858" y="174" width="44" height="44" rx="8" fill="#6b7280"/>
+    <use href="#p2-ico-code" x="521.7142857142858" y="182" width="28" height="28" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="535.7142857142858" y1="218" x2="535.7142857142858" y2="300" stroke="#c9c9d1" stroke-width="2"/>
+  </g>
+  <g>
+    <text x="692.8571428571429" y="76" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1a1a2e" text-anchor="middle">3</text>
+    <text x="692.8571428571429" y="92" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#3d3d45" text-anchor="middle"><tspan x="692.8571428571429" dy="0">Unit Test</tspan><tspan x="692.8571428571429" dy="13">Creation</tspan></text>
+    <use href="#p2-person-3" x="665.8571428571429" y="108" width="54" height="54"/>
+    <rect x="670.8571428571429" y="170" width="44" height="44" rx="8" fill="#6b7280"/>
+    <use href="#p2-ico-tests" x="678.8571428571429" y="178" width="28" height="28" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="692.8571428571429" y1="214" x2="692.8571428571429" y2="300" stroke="#c9c9d1" stroke-width="2"/>
+  </g>
+  <g>
+    <text x="850.0" y="76" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1a1a2e" text-anchor="middle">4</text>
+    <text x="850.0" y="92" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#3d3d45" text-anchor="middle"><tspan x="850.0" dy="0">Test</tspan><tspan x="850.0" dy="13">Execution</tspan></text>
+    <use href="#p2-person-4" x="823.0" y="108" width="54" height="54"/>
+    <rect x="828.0" y="170" width="44" height="44" rx="8" fill="#6b7280"/>
+    <use href="#p2-ico-exec" x="836.0" y="178" width="28" height="28" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="850.0" y1="214" x2="850.0" y2="300" stroke="#c9c9d1" stroke-width="2"/>
+  </g>
+  <g>
+    <text x="1007.1428571428571" y="76" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1a1a2e" text-anchor="middle">5</text>
+    <text x="1007.1428571428571" y="96" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#3d3d45" text-anchor="middle"><tspan x="1007.1428571428571" dy="0">Coding</tspan></text>
+    <use href="#p2-person-5" x="980.1428571428571" y="112" width="54" height="54"/>
+    <rect x="985.1428571428571" y="174" width="44" height="44" rx="8" fill="#6b7280"/>
+    <use href="#p2-ico-code" x="993.1428571428571" y="182" width="28" height="28" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="1007.1428571428571" y1="218" x2="1007.1428571428571" y2="300" stroke="#c9c9d1" stroke-width="2"/>
+  </g>
+  <g>
+    <text x="1164.2857142857142" y="76" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1a1a2e" text-anchor="middle">6</text>
+    <text x="1164.2857142857142" y="96" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#3d3d45" text-anchor="middle"><tspan x="1164.2857142857142" dy="0">QA Review</tspan></text>
+    <use href="#p2-person-6" x="1137.2857142857142" y="112" width="54" height="54"/>
+    <rect x="1142.2857142857142" y="174" width="44" height="44" rx="8" fill="#6b7280"/>
+    <use href="#p2-ico-qa" x="1150.2857142857142" y="182" width="28" height="28" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="1164.2857142857142" y1="218" x2="1164.2857142857142" y2="300" stroke="#c9c9d1" stroke-width="2"/>
+  </g>
+  <g>
+    <text x="1321.4285714285716" y="76" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1a1a2e" text-anchor="middle">7</text>
+    <text x="1321.4285714285716" y="96" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#3d3d45" text-anchor="middle"><tspan x="1321.4285714285716" dy="0">Integration</tspan></text>
+    <use href="#p2-person-7" x="1294.4285714285716" y="112" width="54" height="54"/>
+    <rect x="1299.4285714285716" y="174" width="44" height="44" rx="8" fill="#6b7280"/>
+    <use href="#p2-ico-integration" x="1307.4285714285716" y="182" width="28" height="28" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="1321.4285714285716" y1="218" x2="1321.4285714285716" y2="300" stroke="#c9c9d1" stroke-width="2"/>
+  </g>
+
+  <text x="850.0" y="356" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#1d4ed8" text-anchor="middle">Same person at every step.</text>
+</svg>

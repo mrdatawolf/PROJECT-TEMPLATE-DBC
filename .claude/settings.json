@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 \"C:/Users/Patrick/AppData/Local/Temp/claude/d--Projects-GitHub-PROJECT-TEMPLATE-DBC/c003a14c-91be-46ca-b2bf-6fa8b421ba4a/scratchpad/gen_panel2b.py\")",
+      "Bash('/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe' --headless --disable-gpu --screenshot=C:/Users/Patrick/AppData/Local/Temp/claude/d--Projects-GitHub-PROJECT-TEMPLATE-DBC/c003a14c-91be-46ca-b2bf-6fa8b421ba4a/scratchpad/panel2b-preview.png --window-size=1400,640 file:///D:/Projects/GitHub/PROJECT-TEMPLATE-DBC/presentation/images/panel-2b-human-ai-together.svg)",
+      "Bash(rm -f \"C:/Users/Patrick/AppData/Local/Temp/claude/d--Projects-GitHub-PROJECT-TEMPLATE-DBC/c003a14c-91be-46ca-b2bf-6fa8b421ba4a/scratchpad/\"*.png)",
+      "Bash('/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe' --headless --disable-gpu --screenshot=C:/Users/Patrick/AppData/Local/Temp/claude/d--Projects-GitHub-PROJECT-TEMPLATE-DBC/c003a14c-91be-46ca-b2bf-6fa8b421ba4a/scratchpad/slide10.png --window-size=1920,1080 'file:///D:/Projects/GitHub/PROJECT-TEMPLATE-DBC/presentation/index.html#10')"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Patrick\\AppData\\Local\\Temp\\claude\\d--Projects-GitHub-PROJECT-TEMPLATE-DBC\\c003a14c-91be-46ca-b2bf-6fa8b421ba4a\\scratchpad"
+    ]
+  }
+}
